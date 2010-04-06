@@ -17,33 +17,8 @@
                            http://www.springframework.org/schema/aop
 						   http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<aop:aspectj-autoproxy/>
-	
+	<import resource="application-aop.xml"/>
+	<import resource="application-transaction-db.xml"/>
 	<context:annotation-config/>
-	<context:component-scan base-package="com.tvo.scheduler,com.tvo.aop.logging,com.tvo.dao"/>
-    <context:property-placeholder location="classpath:app.properties"/>
-
-	<task:annotation-driven/>
-	
-	<bean id="namedPrameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-    
-	<bean id="simpleJdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-    
-    <tx:annotation-driven/>
-    
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-    </bean>
     
 </beans>
