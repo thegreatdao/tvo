@@ -3,15 +3,39 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  	<display-name>Archetype Created Web Application</display-name>
-	
+	<display-name>Archetype Created Web Application</display-name>
+
 	<context-param>
-	  <param-name>contextConfigLocation</param-name>
-	  <param-value>classpath:/application-context.xml</param-value>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/application-context.xml</param-value>
 	</context-param>
-	
+
 	<listener>
-	  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>Jersey Spring</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>
+			<param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value>
+		</init-param>
+		<!-- 
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value></param-value>
+		</init-param>
+		 -->
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Jersey
+			Spring</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
 </web-app>
