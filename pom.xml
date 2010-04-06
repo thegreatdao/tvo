@@ -14,15 +14,15 @@
 
 	<developers>
 		<developer>
-			<id></id>
-			<name></name>
-			<email></email>
+			<id>1</id>
+			<name>Hongli Li</name>
+			<email>hongli.liatymail.com</email>
 			<organization></organization>
 			<organizationUrl>
 
             </organizationUrl>
 			<roles>
-				<role></role>
+				<role>software engineer</role>
 			</roles>
 		</developer>
 	</developers>
@@ -252,6 +252,12 @@
 			<version>2.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6</version>
+		</dependency>
+
 	</dependencies>
 
 	<licenses>
@@ -303,19 +309,24 @@
 
 	<reporting>
 		<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.4.3</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-report-plugin</artifactId>
-					<version>2.5</version>
-					<configuration>
-						<showSuccess>false</showSuccess>
-					</configuration>
-				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.3</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<showSuccess>false</showSuccess>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.1</version>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
@@ -326,6 +337,30 @@
 						<format>xml</format>
 					</formats>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+
+				<configuration>
+					<charset>UTF-8</charset>
+					<docencoding>UTF-8</docencoding>
+					<docfilessubdirs>true</docfilessubdirs>
+					<!--
+						<links> <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+						</links>
+					-->
+					<show>protected</show>
+					<source>1.5</source>
+					<sourcepath>${basedir}/src/main/java</sourcepath>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
 		</plugins>
 	</reporting>
