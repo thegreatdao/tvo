@@ -1,5 +1,8 @@
 package com.tvo.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Parent
 {
 	private long id;
@@ -21,6 +24,7 @@ public class Parent
 	{
 		this.name = name;
 	}
+	
 	@Override
 	public String toString()
 	{
