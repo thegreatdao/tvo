@@ -20,8 +20,8 @@ public class TransactionLogAspect
 	public void logTransactions(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
 	{
 		Signature signature = proceedingJoinPoint.getSignature();
-		LOGGER.info(signature + " invoked at " + new Date());
+		LOGGER.info(signature + " invoked at --" + new Date());
 		proceedingJoinPoint.proceed();
-		LOGGER.info(signature + " ended at " + new Date());
+		LOGGER.info(signature + " ended at --" + new Date());
 	}
 }
