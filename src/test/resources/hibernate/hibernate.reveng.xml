@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="air_time"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="air_time_type"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_article"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_attachment"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_blog"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_blog_post"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_metadata"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_relation"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_right"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_root"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="asset_video"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="brightcove_id"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="category"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="category_sub"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="category_sub_asset"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_profile"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_profile_article"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_profile_asset"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_profile_blog"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_profile_blog_post"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="contributor_type"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="countries_iso"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="domain_name"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="domain_publish"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="geo_filter"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="geo_location"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="log_asset_telescope"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="right_type"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="strands"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="strands_schedule"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+	<table-filter match-name="user_account"
+		match-catalog="tvo_web_repository_rev9">
+	</table-filter>
+</hibernate-reverse-engineering>
