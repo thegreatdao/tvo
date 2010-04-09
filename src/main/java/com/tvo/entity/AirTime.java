@@ -18,9 +18,4 @@ public class AirTime implements java.io.Serializable
 	private String createdBy;
 	private String updatedBy;
 
-	public AirTime()
-	{
-		
-	}
-
 }
