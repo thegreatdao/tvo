@@ -8,6 +8,6 @@ import lombok.Data;
 public class Generic
 {
 	@PersistentId
-	private int genericKey;
+	private Integer genericKey;
 	private String name;
 }
