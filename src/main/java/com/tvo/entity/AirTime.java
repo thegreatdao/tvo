@@ -2,9 +2,11 @@ package com.tvo.entity;
 
 import java.util.Date;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class AirTime implements java.io.Serializable
+@EqualsAndHashCode(callSuper=false)
+public class AirTime extends TvoEntity
 {
 
 	private static final long serialVersionUID = 5177393003578736534L;

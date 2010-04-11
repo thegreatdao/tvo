@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 
 	<description>
-        tvo
+		tvo
     </description>
 
 	<developers>
@@ -20,7 +20,7 @@
 			<organization></organization>
 			<organizationUrl>
 
-            </organizationUrl>
+			</organizationUrl>
 			<roles>
 				<role>software engineer</role>
 			</roles>
@@ -90,6 +90,12 @@
 			<groupId>org.sakaiproject</groupId>
 			<artifactId>generic-dao</artifactId>
 			<version>[0.9.8,1.0.0)</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
 		</dependency>
 
 		<dependency>
@@ -319,7 +325,7 @@
 			<name></name>
 			<url></url>
 			<comments>
-            </comments>
+			</comments>
 		</license>
 	</licenses>
 

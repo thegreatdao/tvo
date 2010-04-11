@@ -2,14 +2,19 @@ package com.tvo.entity;
 
 import java.util.Date;
 
+import org.sakaiproject.genericdao.api.annotations.PersistentId;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class AssetRoot implements java.io.Serializable
+@EqualsAndHashCode(callSuper=false)
+public class AssetRoot extends TvoEntity
 {
 	
 	private static final long serialVersionUID = 3386949100542034153L;
 
+	@PersistentId
 	private Integer assetRootId;
 	private Integer geoFilterId;
 	private String telescopeAssetId;

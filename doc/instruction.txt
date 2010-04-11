@@ -1,0 +1,7 @@
+here are a list of conventions developer should follow:
+
+1) keep the existing dadabase naming conventions
+	a) primary key name in the parent is the same as foreign key name in the child
+	b) if the primary key name is not defined as id, then it should be annotated with @PersistentIdColumn
+	c) each primary key name shouldnot use primitive type, but Wrapper type
+2)
