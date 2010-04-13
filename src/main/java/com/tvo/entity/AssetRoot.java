@@ -2,6 +2,8 @@ package com.tvo.entity;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
 
 import lombok.Data;
@@ -9,6 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
+@XmlRootElement
 public class AssetRoot extends TvoEntity
 {
 	

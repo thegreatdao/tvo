@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class TestAssets
 		assetRoot.setAgeRating("12");
 		assetRoot.setAssetType("assetType");
 		assetRoot.setCreatedBy("createdBy");
-		assetRoot.setCreatedOn(new Date());
+		assetRoot.setCreatedOn(new Timestamp(new Date().getTime()));
 		assetRoot.setDescriptionInternet("descriptionInternet");
 		assetRoot.setDescriptionShort("descriptionShort");
 		assetRoot.setDuration(new Date());

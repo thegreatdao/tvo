@@ -1,12 +1,16 @@
 package com.tvo.entity;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
+import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
+@XmlRootElement
 public class AssetVideo extends TvoEntity
 {
 
@@ -24,5 +28,7 @@ public class AssetVideo extends TvoEntity
 	private String videoStillUrl;
 	private String videoUrl;
 	private String bcRefId;
+	@PersistentTransient
+	private AssetRoot assetRoot;
 
 }
