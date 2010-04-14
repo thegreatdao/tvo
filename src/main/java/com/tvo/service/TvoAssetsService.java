@@ -44,6 +44,18 @@ public class TvoAssetsService
 		return tvoJdbcGenericDaoImpl.findAll(entityType);
 	}
 	
+	@Transactional(readOnly=true)
+	public <T extends TvoEntity> void fetchOneAssociation(T entity, Class<? extends TvoEntity> entityType)
+	{
+		tvoJdbcGenericDaoImpl.fetchOneAssociation(entity, entityType);
+	}
+	
+	@Transactional(readOnly=true)
+	public <T extends TvoEntity> void fetchOneAssociation(Class<? extends TvoEntity> child, Class<? extends TvoEntity> parent, Serializable childId)
+	{
+		tvoJdbcGenericDaoImpl.fetchOneAssociation(child, parent, childId);
+	}
+	
 /*	@Override
 	public void addInterceptor(DaoOperationInterceptor interceptor)
 	{

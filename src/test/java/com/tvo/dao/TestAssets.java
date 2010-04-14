@@ -5,8 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class TestAssets
 		assetRoot.setAgeRating("12");
 		assetRoot.setAssetType("assetType");
 		assetRoot.setCreatedBy("createdBy");
-		assetRoot.setCreatedOn(new Timestamp(new Date().getTime()));
+		assetRoot.setCreatedOn(new Date());
 		assetRoot.setDescriptionInternet("descriptionInternet");
 		assetRoot.setDescriptionShort("descriptionShort");
 		assetRoot.setDuration(new Date());
@@ -72,14 +72,21 @@ public class TestAssets
 	{
 		int initSizeOfAssetVideo = assetsService.findAll(AssetVideo.class).size();
 		assetsService.saveParentWithChild(assetRoot, assetVideo);
+		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());
 		assertNotNull(assetVideo.getAssetVideoId());
 		AssetRoot loadedAssetRoot = assetsService.findById(AssetRoot.class, assetRoot.getAssetRootId());
 		assertNotNull(loadedAssetRoot);
-		int initSizeAssetVideoPlus1 = assetsService.findAll(AssetVideo.class).size();
+		List<AssetVideo> assetVideos = assetsService.findAll(AssetVideo.class);
+		int initSizeAssetVideoPlus1 = assetVideos.size();
 		assertTrue(initSizeOfAssetVideo == initSizeAssetVideoPlus1 -1);
-		assetsService.delete(AssetVideo.class, assetVideo.getAssetVideoId());
+		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		AssetVideo loadedAssetVideo = assetsService.findById(AssetVideo.class, assetVideo.getAssetVideoId());
+		assertNull(loadedAssetVideo.getAssetRoot());
+		assetsService.fetchOneAssociation(loadedAssetVideo, AssetRoot.class);
+		assertNotNull(loadedAssetVideo.getAssetRoot());
+		assetsService.delete(AssetVideo.class, assetVideo.getAssetVideoId());
+		loadedAssetVideo = assetsService.findById(AssetVideo.class, assetVideo.getAssetVideoId());
 		assertNull(loadedAssetVideo);
 		int afterRemovalAssetVideoSize = assetsService.findAll(AssetVideo.class).size();
 		assertTrue(initSizeOfAssetVideo == afterRemovalAssetVideoSize);
