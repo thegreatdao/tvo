@@ -1,34 +1,26 @@
 package com.tvo.dao;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringUtils;
-import org.sakaiproject.genericdao.springjdbc.JdbcGeneralGenericDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.tvo.dao.util.TvoJdbcGenericDaoHelper.*;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang.StringUtils;
+import org.sakaiproject.genericdao.api.search.Search;
+import org.sakaiproject.genericdao.springjdbc.JdbcGeneralGenericDao;
+
+import com.tvo.dao.util.TvoEntityFieldNameAndTypePair;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
-{
-	private static final Logger LOGGER = LoggerFactory.getLogger(TvoJdbcGenericDaoImpl.class);
+{	
 
 	public <T extends TvoEntity> void saveParentWithChild(T parent, T child)
 	{
 		saveOrUpdate(parent);
-
 		String key = getIdColumn(parent.getClass());
 		key = mapFieldName(key);
 		Object value = getIdValue(parent);
-		try
-		{
-			PropertyUtils.setSimpleProperty(child, key, value);
-		}
-		catch (Exception e)
-		{
-			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
-			LOGGER.error(e.getMessage(), tvoReflectionException);
-			throw tvoReflectionException;
-		}
+		setSimpleProperty(child, key, value);
 		saveOrUpdate(child);
 	}
 
@@ -42,6 +34,34 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		{
 			save(entity);
 		}
+	}
+	
+	public void fetchOneAssociation(Class<? extends TvoEntity> child, Class<? extends TvoEntity> parent, Serializable childId)
+	{
+		TvoEntity entity = findById(child, childId);
+		fetchOneAssociation(entity, parent);
+	}
+	
+	public <T extends TvoEntity> void fetchOneAssociation(T entity, Class<? extends TvoEntity> entityType)
+	{
+		TvoEntityFieldNameAndTypePair fieldNameAndTypePair = getFiledNameAndType(entity, entityType);
+		if(fieldNameAndTypePair != null)
+		{
+			String property = mapFieldName(getIdColumn(entityType));
+			Search search = new Search(property, getSimpleProperty(entity, property));
+			TvoEntity findOneBySearch = findOneBySearch(entityType, search);
+			setSimpleProperty(entity, fieldNameAndTypePair.getKey(), findOneBySearch);
+		}
+	}
+	
+	public <T extends TvoEntity> T eagerFetchAll(T entity)
+	{
+		return null;
+	}
+	
+	public <T extends TvoEntity> T eagerSelectiveFetch(T entity)
+	{
+		return null;
 	}
 	
 	private String mapFieldName(String fieldName)
@@ -65,14 +85,4 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		return result.toString();
 	}	
 	
-	private class TvoReflectionException extends RuntimeException
-	{
-		private static final long serialVersionUID = 1776111410006763987L;
-
-		public TvoReflectionException(Throwable cause)
-		{
-			super(cause);
-		}
-
-	}
 }
