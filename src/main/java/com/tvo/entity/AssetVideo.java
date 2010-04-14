@@ -1,5 +1,8 @@
 package com.tvo.entity;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Data;
@@ -11,6 +14,7 @@ import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AssetVideo extends TvoEntity
 {
 
@@ -29,6 +33,7 @@ public class AssetVideo extends TvoEntity
 	private String videoUrl;
 	private String bcRefId;
 	@PersistentTransient
+	@XmlElement(name="root")
 	private AssetRoot assetRoot;
 
 }
