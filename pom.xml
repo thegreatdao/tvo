@@ -129,11 +129,47 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.axis</groupId>
-			<artifactId>axis</artifactId>
-			<version>1.4</version>
+			<groupId>org.apache</groupId>
+			<artifactId>teleScopeAxis</artifactId>
+			<version>1.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache</groupId>
+			<artifactId>teleScopeDiscovery</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.rpc</groupId>
+			<artifactId>teleScopeJaxrpc</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>teleScopeSaaj</artifactId>
+			<version>1.0</version>
+		</dependency>				
+		
+		<dependency>
+			<groupId>com.techtrader</groupId>
+			<artifactId>teleScopett_Bytecode</artifactId>
+			<version>1.0</version>
+		</dependency>
+						
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>teleScopeWsdl4j</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache</groupId>
+			<artifactId>teleScopeXmlrpc</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.xml</groupId>
 			<artifactId>jaxrpc-api</artifactId>
