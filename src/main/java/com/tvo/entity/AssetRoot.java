@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import lombok.Data;
@@ -22,9 +23,9 @@ public class AssetRoot extends TvoEntity
 	private static final long serialVersionUID = 3386949100542034153L;
 
 	@PersistentId
-	@XmlElement(name="arid")
+	@XmlTransient
 	private Integer assetRootId;
-	@XmlElement(name="id")
+	@XmlElement(name="geo_id")
 	private Integer geoFilterId;
 	@XmlElement(name="taid")
 	private String telescopeAssetId;
