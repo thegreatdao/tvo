@@ -1,6 +1,8 @@
 package com.tvo.dao.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -13,13 +15,27 @@ public class TvoJdbcGenericDaoHelper
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TvoJdbcGenericDaoImpl.class);
 
-	public static <T extends TvoEntity> TvoEntityFieldNameAndTypePair getFiledNameAndType(
-			T entity, Class<?> type)
+	public static <T extends TvoEntity> TvoEntityFieldNameAndTypePair getFiledNameAndType(T entity, Class<?> type)
 	{
 		TvoEntityFieldNameAndTypePair fieldNameAndTypePair = new TvoEntityFieldNameAndTypePair();
 		Field[] declaredFields = entity.getClass().getDeclaredFields();
 		for (Field field : declaredFields)
 		{
+			Type genericFieldType = field.getGenericType();
+			if (genericFieldType instanceof ParameterizedType)
+			{
+				ParameterizedType aType = (ParameterizedType) genericFieldType;
+				Type[] fieldArgTypes = aType.getActualTypeArguments();
+				for (Type fieldArgType : fieldArgTypes)
+				{
+					if (fieldArgType == type)
+					{
+						fieldNameAndTypePair.setCollectionType(true);
+						fieldNameAndTypePair.setKey(field.getName());
+						fieldNameAndTypePair.setType(field.getType());
+					}
+				}
+			}
 			if (field.getType() == type)
 			{
 				fieldNameAndTypePair.setKey(field.getName());
@@ -34,10 +50,10 @@ public class TvoJdbcGenericDaoHelper
 		try
 		{
 			PropertyUtils.setSimpleProperty(bean, name, value);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
-			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
+			TvoReflectionException tvoReflectionException = new TvoReflectionException(
+					e);
 			LOGGER.error(e.getMessage(), tvoReflectionException);
 			throw tvoReflectionException;
 		}
@@ -49,14 +65,14 @@ public class TvoJdbcGenericDaoHelper
 		{
 			return PropertyUtils.getSimpleProperty(bean, name);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
 			LOGGER.error(e.getMessage(), tvoReflectionException);
 			throw tvoReflectionException;
 		}
 	}
-	
+
 	private static class TvoReflectionException extends RuntimeException
 	{
 		private static final long serialVersionUID = 1776111410006763987L;
