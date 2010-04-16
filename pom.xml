@@ -226,6 +226,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>org.springframework.jms</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 		<!--
 			Bean Factory and JavaBeans utilities (depends on core) Define this if
 			you use Spring Bean APIs (org.springframework.beans.*)
@@ -293,6 +298,12 @@
 			<version>1.5.2</version>
 		</dependency>
 
+		<dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>com.springsource.javax.jms</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        
 		<!--  for jdk 1.6 only -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -353,6 +364,36 @@
 			<artifactId>joda-time</artifactId>
 			<version>1.6</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>com.springsource.org.apache.activemq</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>com.springsource.javax.management.j2ee</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>com.springsource.javax.annotation</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>com.springsource.javax.jms</artifactId>
+            <version>1.1.0</version>
+        </dependency>
 
 	</dependencies>
 

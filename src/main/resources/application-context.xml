@@ -19,6 +19,7 @@
 
 	<import resource="application-aop.xml"/>
 	<import resource="application-transaction-db.xml"/>
+	<import resource="application-amq.xml"/>
 	<context:annotation-config/>
     
 </beans>
