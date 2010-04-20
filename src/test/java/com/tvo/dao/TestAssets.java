@@ -18,6 +18,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,7 +37,7 @@ public class TestAssets
 	{
 		assetRoot = new AssetRoot();
 		assetRoot.setAgeRating("12");
-		assetRoot.setAssetType("assetType");
+		assetRoot.setAssetType(AssetType.ARTICLE);
 		assetRoot.setCreatedBy("createdBy");
 		assetRoot.setCreatedOn(new Date());
 		assetRoot.setDescriptionInternet("descriptionInternet");

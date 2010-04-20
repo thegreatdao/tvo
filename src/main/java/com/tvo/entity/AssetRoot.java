@@ -11,7 +11,9 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import org.sakaiproject.genericdao.api.annotations.PersistentColumnName;
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
+import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
@@ -22,6 +24,21 @@ public class AssetRoot extends TvoEntity
 	
 	private static final long serialVersionUID = 3386949100542034153L;
 
+	public enum AssetType
+	{
+		PROMO, SERIES, PROGRAM, VIDEO, ARTICLE, BLOG, GAME, CONTEST, NA
+	}
+	@PersistentTransient
+	public AssetType getAssetType()
+	{
+		return AssetType.valueOf(this.asset_Type);
+	}
+
+	public void setAssetType(AssetType typeCategory)
+	{
+		this.asset_Type = typeCategory.toString();
+	}
+	
 	@PersistentId
 	@XmlTransient
 	private Integer assetRootId;
@@ -34,7 +51,8 @@ public class AssetRoot extends TvoEntity
 	private String title;
 	private String source;
 	@XmlElement(name="type")
-	private String assetType;
+	@PersistentColumnName("asset_type")
+	private String asset_Type;
 	@XmlElement(name="DI")
 	private String descriptionInternet;
 	@XmlElement(name="DESC")
