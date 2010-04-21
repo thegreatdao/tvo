@@ -22,18 +22,18 @@ import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 public class AssetRoot extends TvoEntity
 {
 	private static final long serialVersionUID = 3386949100542034153L;
-	
+
 	public enum AssetType
 	{
 		PROMO, SERIES, PROGRAM, VIDEO, ARTICLE, BLOG, GAME, CONTEST, NA
 	}
-	
+
 	@PersistentTransient
 	public AssetType getAssetType()
 	{
 		return AssetType.valueOf(this.asset_Type);
 	}
-	
+
 	public void setAssetType(AssetType typeCategory)
 	{
 		this.asset_Type = typeCategory.toString();
@@ -51,7 +51,7 @@ public class AssetRoot extends TvoEntity
 	@XmlElement(name="type")
 	@PersistentColumnName("asset_type")
 	private String asset_Type;
-	
+
 	private String descriptionInternet;
 	private String descriptionShort;
 	private String ageRating;
