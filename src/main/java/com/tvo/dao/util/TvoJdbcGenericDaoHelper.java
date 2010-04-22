@@ -3,6 +3,8 @@ package com.tvo.dao.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -24,16 +26,13 @@ public class TvoJdbcGenericDaoHelper
 			Type genericFieldType = field.getGenericType();
 			if (genericFieldType instanceof ParameterizedType)
 			{
-				ParameterizedType aType = (ParameterizedType) genericFieldType;
-				Type[] fieldArgTypes = aType.getActualTypeArguments();
-				for (Type fieldArgType : fieldArgTypes)
+				ParameterizedType tvoEnitityType = (ParameterizedType) genericFieldType;
+				Type fieldArgType = tvoEnitityType.getActualTypeArguments()[0];
+				if (fieldArgType == type)
 				{
-					if (fieldArgType == type)
-					{
-						fieldNameAndTypePair.setCollectionType(true);
-						fieldNameAndTypePair.setKey(field.getName());
-						fieldNameAndTypePair.setType(field.getType());
-					}
+					fieldNameAndTypePair.setCollectionType(true);
+					fieldNameAndTypePair.setKey(field.getName());
+					fieldNameAndTypePair.setType(type);
 				}
 			}
 			if (field.getType() == type)
@@ -50,10 +49,10 @@ public class TvoJdbcGenericDaoHelper
 		try
 		{
 			PropertyUtils.setSimpleProperty(bean, name, value);
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
-			TvoReflectionException tvoReflectionException = new TvoReflectionException(
-					e);
+			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
 			LOGGER.error(e.getMessage(), tvoReflectionException);
 			throw tvoReflectionException;
 		}
@@ -73,6 +72,27 @@ public class TvoJdbcGenericDaoHelper
 		}
 	}
 
+	public static <T extends TvoEntity> List<Class<?>> getAllAssocaitions(Class<T> entityType)
+	{
+		LinkedList<Class<?>> associations = new LinkedList<Class<?>>();
+		Field[] declaredFields = entityType.getDeclaredFields();
+		for (Field field : declaredFields)
+		{
+			Type genericFieldType = field.getGenericType();
+			if (genericFieldType instanceof ParameterizedType)
+			{
+				ParameterizedType tvoEnitityType = (ParameterizedType) genericFieldType;
+				Type fieldType = tvoEnitityType.getActualTypeArguments()[0];
+				associations.add((Class<?>)fieldType);
+			}
+			if(field.getType().getSuperclass() == TvoEntity.class)
+			{
+				associations.add(field.getType());
+			}
+		}
+		return associations;
+	}
+	
 	private static class TvoReflectionException extends RuntimeException
 	{
 		private static final long serialVersionUID = 1776111410006763987L;

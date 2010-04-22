@@ -1,5 +1,7 @@
 package com.tvo.entity;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -42,5 +44,7 @@ public class AssetVideo extends TvoEntity
 	@PersistentTransient
 	@XmlElement(name="root")
 	private AssetRoot assetRoot;
+	@PersistentTransient
+	private List<AssetArticle> assetArticles;
 
 }
