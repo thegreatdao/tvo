@@ -83,11 +83,16 @@ public class TvoJdbcGenericDaoHelper
 			{
 				ParameterizedType tvoEnitityType = (ParameterizedType) genericFieldType;
 				Type fieldType = tvoEnitityType.getActualTypeArguments()[0];
-				associations.add((Class<?>)fieldType);
+				Class<?> inferredType = (Class<?>)fieldType;
+				if(inferredType.getSuperclass() == TvoEntity.class)
+				{
+					associations.add(inferredType);
+				}
 			}
-			if(field.getType().getSuperclass() == TvoEntity.class)
+			Class<?> actualType = field.getType();
+			if(actualType.getSuperclass() == TvoEntity.class)
 			{
-				associations.add(field.getType());
+				associations.add(actualType);
 			}
 		}
 		return associations;
