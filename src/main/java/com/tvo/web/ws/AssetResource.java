@@ -13,8 +13,8 @@ import com.tvo.entity.AssetVideo;
 import com.tvo.service.TvoAssetsService;
 
 @Controller
-@Path(AssetRootResource.ASSET_ROOT_URL)
-public class AssetRootResource
+@Path(AssetResource.ASSET_ROOT_URL)
+public class AssetResource
 {
 	public static final String ASSET_ROOT_URL ="/ws/assetRoot";
 	
