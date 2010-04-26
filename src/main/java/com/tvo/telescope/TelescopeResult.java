@@ -7,11 +7,18 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/*
 import com.tvo.asset.AssetProgram;
 import com.tvo.asset.AssetRoot;
 import com.tvo.asset.AssetSeries;
 import com.tvo.asset.AssetVideo;
 import com.tvo.asset.AssetRoot.AssetType;
+*/
+
+import com.tvo.entity.AssetRoot;
+import com.tvo.entity.AssetRoot.*;
+import com.tvo.entity.AssetVideo;
+
 import com.tvo.telescope.TelescopeRelationship.Containers;
 import com.tvo.telescope.TelescopeRelationship.RelationshipType;
 
@@ -40,7 +47,7 @@ public class TelescopeResult {
 				NamedNodeMap nodeMap = this.childNodeList.item(s).getAttributes();
 		
 				if(nodeMap.getNamedItem("NAME").getNodeValue().equals(fieldNameFmt)) {
-					fieldValue = childNodeList.item(s).getNodeValue();
+					fieldValue = childNodeList.item(s).getTextContent();
 				}
 			}
 		}
@@ -117,7 +124,7 @@ public class TelescopeResult {
 		}
 		
 		assetRootInstance.setCreatedOn(new Date());
-		assetRootInstance.setCreatedby("SYSTEM");
+		assetRootInstance.setCreatedBy("SYSTEM");
 	}
 
 	private String getProgramOrSeriesTitle() {
@@ -169,12 +176,12 @@ public class TelescopeResult {
 	
 	public AssetVideo getAssetVideo() throws Exception {
 		AssetVideo assetVideo = new AssetVideo();
-		assetVideo.setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
-		assetVideo.setTitle(getTelescopeFieldValue("editorial.ttl"));
-		assetVideo.setTitle(getTelescopeFieldValue("editorial.desc_seg"));
-		populateAssetRoot(assetVideo.getAssetRootInstance());
+		assetVideo.getAssetRoot().setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
+		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.ttl"));
+		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.desc_seg"));
+		populateAssetRoot(assetVideo.getAssetRoot());
 		
-		int[] relatedFormAssetIds = this.telescopeQuery.getRelated(assetVideo.getTelescopeRecordId(), Containers.REQUESTED_MEDIA, RelationshipType.CHILD_TO_PARENT);
+		int[] relatedFormAssetIds = this.telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.REQUESTED_MEDIA, RelationshipType.CHILD_TO_PARENT);
 		
 		if(relatedFormAssetIds != null) {
 			
@@ -214,6 +221,7 @@ public class TelescopeResult {
 		return assetVideo;
 	}
 	
+	/*
 	public AssetProgram getAssetProgram() throws Exception {
 		AssetProgram assetProgram = new AssetProgram();
 		assetProgram.setTelescopeAssetId(getTelescopeFieldValue("editorial.id_prg"));
@@ -238,4 +246,5 @@ public class TelescopeResult {
 		
 		return assetSeries;
 	}
+	*/
 }

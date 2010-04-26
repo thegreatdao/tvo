@@ -1,5 +1,7 @@
 package com.tvo.databases;
 
+import java.sql.SQLException;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DbTelescope {
@@ -12,12 +14,11 @@ public class DbTelescope {
     	DbTelescope.dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
     	DbTelescope.dataSource.setUrl("jdbc:oracle:thin:@lando.tvo.org:1521:damdb");
     	DbTelescope.dataSource.setUsername("ws");
-    	DbTelescope.dataSource.setPassword("lift");
+    	DbTelescope.dataSource.setPassword("ws");
     }
     
     @SuppressWarnings("static-access")
 	public static DriverManagerDataSource getDataSource() {
     	return dbTelescope.dataSource;
     }
-    //  ws/lift
 }
