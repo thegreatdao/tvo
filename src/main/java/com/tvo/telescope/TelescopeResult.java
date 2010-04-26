@@ -15,6 +15,7 @@ import com.tvo.asset.AssetVideo;
 import com.tvo.asset.AssetRoot.AssetType;
 */
 
+import com.tvo.brightcove.BrightcoveResponse;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.*;
 import com.tvo.entity.AssetVideo;
@@ -102,6 +103,7 @@ public class TelescopeResult {
 	}
 	
 	private void populateAssetRoot(AssetRoot assetRootInstance) throws Exception {
+		assetRootInstance.setAssetType(this.getAssetType());
 		assetRootInstance.setTelescopeRecordId(this.telescopeRecordId);
 		assetRootInstance.setSource(getTelescopeFieldValue("editorial.id_source"));
 		
@@ -176,10 +178,27 @@ public class TelescopeResult {
 	
 	public AssetVideo getAssetVideo() throws Exception {
 		AssetVideo assetVideo = new AssetVideo();
+		
 		assetVideo.getAssetRoot().setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
-		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.ttl"));
-		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.desc_seg"));
+		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.ttl_elmnt"));
+		assetVideo.getAssetRoot().setDescriptionInternet(getTelescopeFieldValue("editorial.desc_elmnt"));
+		assetVideo.setMasterSeriesNumber(getTelescopeFieldValue("editorial.id_series"));
+
 		populateAssetRoot(assetVideo.getAssetRoot());
+		
+		int[] relatedProgramIds = this.telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.CONTENT_DIGITAL, RelationshipType.CHILD_TO_PARENT);
+		
+		if(relatedProgramIds != null) {
+			
+			int assetContentDigitalId = relatedProgramIds[0];
+			
+			TelescopeResult contentDigitalResult = this.telescopeQuery.getResult(assetContentDigitalId, TelescopeQuery.getDefaultFieldNames());
+			
+			assetVideo.getAssetRoot().setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_prg"));
+			assetVideo.getAssetRoot().setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
+			assetVideo.getAssetRoot().setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
+		}
+		
 		
 		int[] relatedFormAssetIds = this.telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.REQUESTED_MEDIA, RelationshipType.CHILD_TO_PARENT);
 		
@@ -189,9 +208,9 @@ public class TelescopeResult {
 			
 			for(int assetFormId : relatedFormAssetIds) {
 				
-				TelescopeResult telescopeResult = this.telescopeQuery.getResult(assetFormId, TelescopeQuery.getDefaultFieldNames());
+				TelescopeResult requestMediaFormResult = this.telescopeQuery.getResult(assetFormId, TelescopeQuery.getDefaultFieldNames());
 				
-				String publishPoint = telescopeResult.getTelescopeFieldValue("frm.publish_point");
+				String publishPoint = requestMediaFormResult.getTelescopeFieldValue("frm.publish_point");
 				// System.out.println(assetFormId);
 				// telescopeResult.
 				// System.out.println("Found Related Form: " + assetFormId);
@@ -201,9 +220,32 @@ public class TelescopeResult {
 				
 				if(publishPoint.toLowerCase().contains("brightcove")) {
 					isBrightcove = true;
+					
+					SimpleDateFormat df_releaseDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+					
+					String frmPublishStart = requestMediaFormResult.getTelescopeFieldValue("frm.publish_start");
+					String frmPublishEnd = requestMediaFormResult.getTelescopeFieldValue("frm.publish_end");
+					
+					if(frmPublishStart.length() == 0 || frmPublishEnd.length() == 0) {
+						return null;
+					}
+					
+					assetVideo.getAssetRoot().setUserTimeStart(df_releaseDate.parse(frmPublishStart));
+					assetVideo.getAssetRoot().setUserTimeEnd(df_releaseDate.parse(frmPublishEnd));
+					
+					// WE MAY NEED TO CHANGE THIS
+					assetVideo.getAssetRoot().setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
+					
+					String tvoMainId = "67580125001";
+					BrightcoveResponse response = BrightcoveResponse.getResponse(tvoMainId);
+					
+					assetVideo.setLength(response.getLength());
+					assetVideo.setVideoStillUrl(response.getVideoStillUrl());
+					assetVideo.setThumbnailUrl(response.getThumbnailUrl());
+					//assetVideo.setGeoFilter(GeoFilter.TEST_FILTER);
+					assetVideo.getAssetRoot().setGeoFilterId(1);
 				}
-				
-				//
+
 			}
 			
 			if(isBrightcove == false) {

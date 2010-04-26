@@ -21,4 +21,9 @@ public class DbTelescope {
 	public static DriverManagerDataSource getDataSource() {
     	return dbTelescope.dataSource;
     }
+    
+    public static void close() throws Throwable {
+    	System.out.println("Closing...");
+    	DbTelescope.dataSource.getConnection().close();
+    }
 }

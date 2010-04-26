@@ -4,8 +4,11 @@ import java.util.Calendar;
 
 //import com.tvo.entity.AssetProgram;
 //import com.tvo.asset.AssetSeries;
+import com.tvo.databases.DbTelescope;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.service.AssetDaoService;
+import com.tvo.service.TvoDaoService;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
 import com.tvo.telescope.TelescopeQueryCustom;
@@ -52,12 +55,13 @@ public class Application {
     	try {
 	    	TelescopeQuery telescopeQuery = new TelescopeQuery(telescopeConnection);
 	    	Calendar startDate = Calendar.getInstance();
-	    	startDate.set(2010, 04 -1 , 22, 12, 0);
+	    	startDate.set(2010, 04 -1 , 22, 14, 0);
 	    	
 	    	Calendar endDate = Calendar.getInstance();
 	    	endDate.set(2010, 04 - 1, 22, 16, 0);
 	    	
-	    	int[] assets = telescopeQuery.getAssetsByDate(startDate.getTime(), endDate.getTime());
+	    	///int[] assets = telescopeQuery.getAssetsByDate(startDate.getTime(), endDate.getTime());
+	    	int[] assets = TelescopeQueryCustom.getFullVideoAssets(startDate.getTime(), endDate.getTime());
 	    	
 	    	if(assets.length > 0) {
 	    		System.out.println("- Found " + assets.length + " assets, writing XML");
@@ -76,6 +80,9 @@ public class Application {
 								//System.out.println(assetVideo.getReleaseDate());
 								System.out.println("> Found Video");
 								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
+							
+								AssetDaoService service = new AssetDaoService();
+								service.saveAssetVideo(assetVideo);
 							} catch(Error error) {
 								System.out.println("Error: " + error.getMessage());
 							}
@@ -120,11 +127,13 @@ public class Application {
 		 
     	try {
     		telescopeConnection.disconnect();
+    		DbTelescope.close();
     		System.out.println("- Disconnected from telescope");
     	} catch (Exception ex) {
     		ex.printStackTrace();
     	}
     	
+    	DbTelescope.close();
     	System.out.println("Finished...");
     }
     
