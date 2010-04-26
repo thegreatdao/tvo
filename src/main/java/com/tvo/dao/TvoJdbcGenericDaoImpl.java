@@ -3,17 +3,21 @@ package com.tvo.dao;
 import static com.tvo.dao.util.TvoJdbcGenericDaoHelper.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.sakaiproject.genericdao.api.search.Search;
 import org.sakaiproject.genericdao.springjdbc.JdbcGeneralGenericDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.tvo.dao.util.TvoEntityFieldNameAndTypePair;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 {	
-
+	protected static final Logger LOGGER = LoggerFactory.getLogger(TvoJdbcGenericDaoImpl.class);
+	
 	public <T extends TvoEntity> void saveParentWithChild(T parent, T child)
 	{
 		saveOrUpdate(parent);
@@ -49,8 +53,28 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		{
 			String property = mapFieldName(getIdColumn(entityType));
 			Search search = new Search(property, getSimpleProperty(entity, property));
-			TvoEntity findOneBySearch = findOneBySearch(entityType, search);
-			setSimpleProperty(entity, fieldNameAndTypePair.getKey(), findOneBySearch);
+			if(fieldNameAndTypePair.isCollectionType())
+			{
+				LOGGER.info("loading childen not child you see");
+			}
+			else
+			{
+				TvoEntity findOneBySearch = findOneBySearch(entityType, search);
+				setSimpleProperty(entity, fieldNameAndTypePair.getKey(), findOneBySearch);
+			}
+		}
+	}
+	
+	public <T extends TvoEntity> void fetchAllAssociations(T entity)
+	{
+		
+	}
+	
+	public <T extends TvoEntity> void fetchSelectiveAssociations(T entity, List<Class<? extends TvoEntity>> entityTypes)
+	{
+		for(Class<? extends TvoEntity> entityType : entityTypes)
+		{
+			fetchOneAssociation(entity, entityType);
 		}
 	}
 	
