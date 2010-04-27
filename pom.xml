@@ -75,6 +75,13 @@
 			</snapshots>
 		</repository>
 
+		<repository>
+			<id>local</id>
+			<url>http://localhost:8081/artifactory/repo/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
