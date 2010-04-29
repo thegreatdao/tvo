@@ -7,7 +7,6 @@ import java.util.Calendar;
 import com.tvo.databases.DbTelescope;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
-import com.tvo.service.AssetDaoService;
 import com.tvo.service.TvoDaoService;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
@@ -81,8 +80,8 @@ public class Application {
 								System.out.println("> Found Video");
 								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
 							
-								AssetDaoService service = new AssetDaoService();
-								service.saveAssetVideo(assetVideo);
+								//AssetDaoService service = new AssetDaoService();
+								//service.saveAssetVideo(assetVideo);
 							} catch(Error error) {
 								System.out.println("Error: " + error.getMessage());
 							}

@@ -197,9 +197,9 @@ public class TelescopeResult {
 			
 			String title = contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"); // TTL_WEB_DIST
 			
-			assetVideo.getAssetRoot().setTitle(title);
-			assetVideo.getAssetRoot().setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
-			assetVideo.getAssetRoot().setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
+			assetRoot.setTitle(title);
+			assetRoot.setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
+			assetRoot.setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
 		}
 		
 		
@@ -233,14 +233,13 @@ public class TelescopeResult {
 						return null;
 					}
 					
-					assetVideo.getAssetRoot().setUserTimeStart(df_releaseDate.parse(frmPublishStart));
-					assetVideo.getAssetRoot().setUserTimeEnd(df_releaseDate.parse(frmPublishEnd));
+					assetRoot.setUserTimeStart(df_releaseDate.parse(frmPublishStart));
+					assetRoot.setUserTimeEnd(df_releaseDate.parse(frmPublishEnd));
 					
 					// WE MAY NEED TO CHANGE THIS
-					assetVideo.getAssetRoot().setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
+					assetRoot.setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
 					
-					String tvoMainId = "67580125001";
-					BrightcoveResponse response = BrightcoveResponse.getResponse(tvoMainId);
+					BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
 					
 					assetVideo.setLength(response.getLength());
 					assetVideo.setVideoStillUrl(response.getVideoStillUrl());

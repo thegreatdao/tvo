@@ -31,17 +31,6 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		saveOrUpdate(child);
 	}
 	
-	public void saveAssetVideo(AssetVideo assetVideo)
-	{
-		AssetRoot assetRoot = assetVideo.getAssetRoot();
-		saveOrUpdate(assetVideo.getAssetRoot());
-		String key = getIdColumn(assetVideo.getAssetRoot().getClass());
-		key = mapFieldName(key);
-		Object value = getIdValue(assetVideo);
-		ReflectUtils.getInstance().setFieldValue(assetRoot, key, value);
-		saveOrUpdate(assetRoot);
-	}
-
 	public <T extends TvoEntity> void saveOrUpdate(T entity)
 	{
 		if(getIdValue(entity)==null)
@@ -121,6 +110,23 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 			counter++;
 		}
 		return result.toString();
-	}	
+	}
 	
+	/*
+	 * Asset Specific methods
+	 */
+	
+	public void assetVideoSave(AssetVideo assetVideo)
+	{
+		AssetRoot assetRoot = assetVideo.getAssetRoot();
+		
+		saveOrUpdate(assetRoot);
+		String key = getIdColumn(assetRoot.getClass());
+		key = mapFieldName(key);
+		Object value = getIdValue(assetRoot);
+		ReflectUtils.getInstance().setFieldValue(assetVideo, key, value);
+		saveOrUpdate(assetVideo);
+		
+		// tvoDaoService.saveParentWithChild(assetVideo.getAssetRoot(), assetVideo);
+	}
 }

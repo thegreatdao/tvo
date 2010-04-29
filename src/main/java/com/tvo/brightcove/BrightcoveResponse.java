@@ -11,6 +11,7 @@ import org.codehaus.jettison.json.JSONObject;
 public class BrightcoveResponse {
 	
 	private static String tokenSecret = "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
+	// private static String tokenSecret = "6vie5IAaEOFagDJOKUy4qDSpU3DWjNqh13vd8cM7IZvYapep4Upfzw."; // KIDS
 	
 	private int assetVideoId;
 	private String tvoMainId;
@@ -102,12 +103,12 @@ public class BrightcoveResponse {
 		return assetVideoId;
 	}
 	
-	public static BrightcoveResponse getResponse(String tvoMainId) throws Exception {
+	public static BrightcoveResponse getResponseByTelescopeAssetId(String tvoMainId) throws Exception {
 		
 			BrightcoveResponse response = new BrightcoveResponse();
 					
-			String brightCoveRequestUrl = "http://api.brightcove.com/services/library?command=find_video_by_id&video_id=" + tvoMainId + "&token=" + BrightcoveResponse.tokenSecret;
-			HttpURLConnection connection = (HttpURLConnection) new URL(brightCoveRequestUrl).openConnection();
+			String brightcoveRequestUrl = "http://api.brightcove.com/services/library?command=find_video_by_reference_id&reference_id=" + tvoMainId + "&token=" + tokenSecret;
+			HttpURLConnection connection = (HttpURLConnection) new URL(brightcoveRequestUrl).openConnection();
 		
 			connection.setRequestMethod("GET");
 			connection.getInputStream();
@@ -148,7 +149,7 @@ public class BrightcoveResponse {
 	
 	public static void main(String[] args) throws Throwable {
 	    
-		 BrightcoveResponse brightcoveResponse = BrightcoveResponse.getResponse("1837282190");
+		 BrightcoveResponse brightcoveResponse = BrightcoveResponse.getResponseByTelescopeAssetId("1837282190");
 		 System.out.println(brightcoveResponse.videoStillUrl);
 	 }
 	
