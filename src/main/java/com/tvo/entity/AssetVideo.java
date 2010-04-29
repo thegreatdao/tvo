@@ -20,13 +20,9 @@ import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AssetVideo extends TvoEntity {
 	
-	public AssetVideo() {
-		this.assetRoot = new AssetRoot();
-	}
 	private static final long serialVersionUID = 6049312423966660328L;
 	
 	@PersistentId
-	@XmlElement(name="id")
 	private Integer assetVideoId;
 	@XmlTransient
 	private Integer assetRootId;

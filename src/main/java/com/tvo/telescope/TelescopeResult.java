@@ -178,9 +178,10 @@ public class TelescopeResult {
 	
 	public AssetVideo getAssetVideo() throws Exception {
 		AssetVideo assetVideo = new AssetVideo();
-		
+		AssetRoot assetRoot = new AssetRoot();
+		assetVideo.setAssetRoot(assetRoot);
+		assetRoot.setCreatedOn(new Date());
 		assetVideo.getAssetRoot().setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
-		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.ttl_elmnt"));
 		assetVideo.getAssetRoot().setDescriptionInternet(getTelescopeFieldValue("editorial.desc_elmnt"));
 		assetVideo.setMasterSeriesNumber(getTelescopeFieldValue("editorial.id_series"));
 
@@ -194,7 +195,9 @@ public class TelescopeResult {
 			
 			TelescopeResult contentDigitalResult = this.telescopeQuery.getResult(assetContentDigitalId, TelescopeQuery.getDefaultFieldNames());
 			
-			assetVideo.getAssetRoot().setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_prg"));
+			String title = contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"); // TTL_WEB_DIST
+			
+			assetVideo.getAssetRoot().setTitle(title);
 			assetVideo.getAssetRoot().setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
 			assetVideo.getAssetRoot().setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
 		}

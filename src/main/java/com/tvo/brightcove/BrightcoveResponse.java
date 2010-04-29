@@ -101,7 +101,7 @@ public class BrightcoveResponse {
 	public int getAssetVideoId() {
 		return assetVideoId;
 	}
-
+	
 	public static BrightcoveResponse getResponse(String tvoMainId) throws Exception {
 		
 			BrightcoveResponse response = new BrightcoveResponse();
@@ -120,9 +120,9 @@ public class BrightcoveResponse {
 	        	jsonResponseSb.append(line + '\n');
 	        }
 	        
-	        String errorTest = "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
-	        // jsonResponseSb.toString()
-	        JSONObject jsonObj = new JSONObject(errorTest);
+	        JSONObject jsonObj = new JSONObject(jsonResponseSb.toString());
+	        //String errorTest = "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
+	        //JSONObject jsonObj = new JSONObject(errorTest);
 	        
 	        try {
 		        response.tvoMainId = jsonObj.getString("id");
@@ -132,7 +132,11 @@ public class BrightcoveResponse {
 		        response.referenceId = jsonObj.getString("referenceId");
 	        } catch(Exception ex) {
 	        	
+	        	ex.printStackTrace();
+	        	
 	        	String result = jsonObj.getString("result");
+	        	
+	        	int foo = 1;
 	        	
 	        	if(result == null) {
 	        		
@@ -141,7 +145,6 @@ public class BrightcoveResponse {
 	        
 	        return response;
 	}
-	
 	
 	public static void main(String[] args) throws Throwable {
 	    

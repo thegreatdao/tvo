@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tvo.dao.util.TvoEntityFieldNameAndTypePair;
+import com.tvo.entity.AssetVideo;
+import com.tvo.entity.AssetRoot;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
@@ -26,6 +28,17 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		Object value = getIdValue(parent);
 		setSimpleProperty(child, key, value);
 		saveOrUpdate(child);
+	}
+	
+	public void saveAssetVideo(AssetVideo assetVideo)
+	{
+		AssetRoot assetRoot = assetVideo.getAssetRoot();
+		saveOrUpdate(assetVideo.getAssetRoot());
+		String key = getIdColumn(assetVideo.getAssetRoot().getClass());
+		key = mapFieldName(key);
+		Object value = getIdValue(assetVideo);
+		setSimpleProperty(assetRoot, key, value);
+		saveOrUpdate(assetRoot);
 	}
 
 	public <T extends TvoEntity> void saveOrUpdate(T entity)

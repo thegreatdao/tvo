@@ -17,6 +17,11 @@ public class TvoAssetsService
 	@Autowired
 	private TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
 
+	public <T extends TvoEntity> void save(T entity)
+	{
+		tvoJdbcGenericDaoImpl.save(entity);
+	}
+	
 	public <T extends TvoEntity> void saveParentWithChild(T parent, T child)
 	{
 		tvoJdbcGenericDaoImpl.saveParentWithChild(parent, child);
