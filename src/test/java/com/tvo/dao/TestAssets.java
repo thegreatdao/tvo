@@ -1,12 +1,15 @@
 package com.tvo.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -58,7 +61,7 @@ public class TestAssets
 
 		assetVideo = new AssetVideo();
 		assetVideo.setBcRefId("bcRefId");
-		assetVideo.setIsEmbedCode(true);
+		assetVideo.setEmbedCode(true);
 		assetVideo.setLength(68);
 		assetVideo.setLinkTitle("linkTitle");
 		assetVideo.setLinkUrl("linkUrl");
@@ -78,6 +81,22 @@ public class TestAssets
 		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());
 		assertNotNull(assetVideo.getAssetVideoId());
+		assetRoot.setAgeRating("AR");
+		assetVideo.setEmbedCode(false);
+		assetsService.saveParentWithChild(assetRoot, assetVideo);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("bcRefId", "bcRefId");
+		parameters.put("linkUrl", "linkUrl");
+		parameters.put("embedCode", false);
+		AssetVideo findByIdAssetVideo = assetsService.findById(AssetVideo.class, assetVideo.getAssetVideoId());
+		assertFalse(findByIdAssetVideo.isEmbedCode());
+		AssetRoot findByIdAssetRoot = assetsService.findById(AssetRoot.class, assetRoot.getAssetRootId());
+		assertTrue(findByIdAssetRoot.getAgeRating().equals("AR"));
+		AssetVideo findAssetVideoBySearch = assetsService.findOneBySearch(AssetVideo.class, parameters);
+		assertNotNull(findAssetVideoBySearch);
+		assertTrue(findAssetVideoBySearch.getAssetVideoId().equals(assetVideo.getAssetVideoId()));
+		List<AssetVideo> findAllAssetVideosBySearch = assetsService.findAllBySearch(AssetVideo.class, parameters);
+		assertTrue(findAllAssetVideosBySearch.size()==1);
 		AssetRoot loadedAssetRoot = assetsService.findById(AssetRoot.class, assetRoot.getAssetRootId());
 		assertNotNull(loadedAssetRoot);
 		List<AssetVideo> assetVideos = assetsService.findAll(AssetVideo.class);

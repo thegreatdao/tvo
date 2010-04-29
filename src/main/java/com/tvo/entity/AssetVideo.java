@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import org.sakaiproject.genericdao.api.annotations.PersistentColumnName;
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
 import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 
@@ -34,7 +35,8 @@ public class AssetVideo extends TvoEntity {
 	@XmlElement(name="msn")
 	private String masterSeriesNumber;
 	@XmlElement(name="iec")
-	private Boolean isEmbedCode;
+	@PersistentColumnName("is_embed_code")
+	private boolean embedCode;
 	@XmlElement(name="thumbnail_url")
 	private String thumbnailUrl;
 	@XmlElement(name="videostill_url")

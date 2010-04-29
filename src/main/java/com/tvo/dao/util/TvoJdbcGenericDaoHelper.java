@@ -5,7 +5,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.sakaiproject.genericdao.api.search.Search;
+
+import com.tvo.dao.util.bean.TvoEntityFieldNameAndTypePair;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoHelper
@@ -63,5 +67,19 @@ public class TvoJdbcGenericDaoHelper
 		}
 		return associations;
 	}		
-
+	
+	public static Search getSearchFromMap(Map<String, Object> parameters)
+	{
+		int size = parameters.size();
+		String[] properties = new String[size];
+		Object[] values = new Object[size];
+		int index = 0;
+		for(Map.Entry<String, Object> pair : parameters.entrySet())
+		{
+			properties[index] = pair.getKey();
+			values[index] = pair.getValue();
+			index++;
+		}		
+		return new Search(properties, values);
+	}
 }
