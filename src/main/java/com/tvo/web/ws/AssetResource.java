@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
-import com.tvo.service.TvoAssetsServiceImpl;
+import com.tvo.service.TvoAssetsService;
 
 @Controller
 @Path(AssetResource.ASSET_ROOT_URL)
@@ -19,7 +19,7 @@ public class AssetResource
 	public static final String ASSET_ROOT_URL ="/ws/assetRoot";
 	
 	@Autowired
-	private TvoAssetsServiceImpl tvoAssetsService;
+	private TvoAssetsService tvoAssetsService;
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
