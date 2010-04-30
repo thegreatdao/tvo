@@ -35,14 +35,7 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 	
 	public <T extends TvoEntity> void saveOrUpdate(T entity)
 	{
-		if(getIdValue(entity)==null)
-		{
-			create(entity);
-		}
-		else
-		{
-			save(entity);
-		}
+		save(entity);
 	}
 	
 	public void fetchOneAssociation(Class<? extends TvoEntity> child, Class<? extends TvoEntity> parent, Serializable childId)
