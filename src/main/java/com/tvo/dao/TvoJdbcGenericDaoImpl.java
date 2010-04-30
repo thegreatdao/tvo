@@ -138,7 +138,5 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		Object value = getIdValue(assetRoot);
 		ReflectUtils.getInstance().setFieldValue(assetVideo, key, value);
 		saveOrUpdate(assetVideo);
-		
-		// tvoDaoService.saveParentWithChild(assetVideo.getAssetRoot(), assetVideo);
 	}
 }
