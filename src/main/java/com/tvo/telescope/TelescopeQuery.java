@@ -132,6 +132,7 @@ public class TelescopeQuery {
 	private int[] _getAssetsByDate(Date startDate, Date endDate, String assetType) throws Throwable {
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		@SuppressWarnings("unchecked")
 		HashMap[] telescopeQuery;
 		
 		if(assetType == null) {

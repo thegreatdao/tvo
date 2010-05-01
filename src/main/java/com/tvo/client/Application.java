@@ -2,12 +2,8 @@ package com.tvo.client;
 
 import java.util.Calendar;
 
-//import com.tvo.entity.AssetProgram;
-//import com.tvo.asset.AssetSeries;
 import com.tvo.databases.DbTelescope;
-import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
-import com.tvo.service.TvoDaoService;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
 import com.tvo.telescope.TelescopeQueryCustom;

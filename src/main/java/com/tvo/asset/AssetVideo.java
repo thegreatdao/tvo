@@ -162,6 +162,7 @@ public class AssetVideo extends AssetRoot
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int save()
 	{
 		final AssetVideo assetVideoInstance = this;
@@ -178,6 +179,7 @@ public class AssetVideo extends AssetRoot
 			public Object doInTransaction(TransactionStatus status)
 			{
 
+				@SuppressWarnings("unused")
 				int generatedId = 0;
 
 				try

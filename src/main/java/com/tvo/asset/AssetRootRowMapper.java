@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
+@SuppressWarnings("unchecked")
 public class AssetRootRowMapper implements RowMapper
 {
 

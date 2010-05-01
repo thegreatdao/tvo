@@ -3,13 +3,11 @@ package com.tvo.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.azeckoski.reflectutils.ReflectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.dao.TvoJdbcGenericDaoImpl;
-import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
 import com.tvo.entity.TvoEntity;
 

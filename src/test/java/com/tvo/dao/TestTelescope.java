@@ -12,11 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tvo.databases.DbTelescope;
 import com.tvo.entity.AssetVideo;
-import com.tvo.service.TvoAssetsService;
 import com.tvo.service.TvoDaoService;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
-import com.tvo.telescope.TelescopeQueryCustom;
 import com.tvo.telescope.TelescopeResult;
 
 @RunWith(SpringJUnit4ClassRunner.class)
