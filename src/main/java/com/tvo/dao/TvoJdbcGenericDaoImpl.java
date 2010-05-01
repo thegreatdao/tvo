@@ -1,17 +1,22 @@
 package com.tvo.dao;
 
-import static com.tvo.dao.util.TvoJdbcGenericDaoHelper.*;
+import static com.tvo.dao.util.TvoJdbcGenericDaoHelper.getFiledNameAndType;
+import static com.tvo.dao.util.TvoJdbcGenericDaoHelper.getSearchFromMap;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.azeckoski.reflectutils.ReflectUtils;
 import org.sakaiproject.genericdao.api.search.Search;
 import org.sakaiproject.genericdao.springjdbc.JdbcGeneralGenericDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tvo.dao.util.TvoEntityFieldNameAndTypePair;
+import com.tvo.dao.util.bean.TvoEntityFieldNameAndTypePair;
+import com.tvo.entity.AssetRoot;
+import com.tvo.entity.AssetVideo;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
@@ -24,20 +29,13 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		String key = getIdColumn(parent.getClass());
 		key = mapFieldName(key);
 		Object value = getIdValue(parent);
-		setSimpleProperty(child, key, value);
+		ReflectUtils.getInstance().setFieldValue(child, key, value);
 		saveOrUpdate(child);
 	}
-
+	
 	public <T extends TvoEntity> void saveOrUpdate(T entity)
 	{
-		if(getIdValue(entity)==null)
-		{
-			create(entity);
-		}
-		else
-		{
-			save(entity);
-		}
+		save(entity);
 	}
 	
 	public void fetchOneAssociation(Class<? extends TvoEntity> child, Class<? extends TvoEntity> parent, Serializable childId)
@@ -52,7 +50,7 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		if(fieldNameAndTypePair != null)
 		{
 			String property = mapFieldName(getIdColumn(entityType));
-			Search search = new Search(property, getSimpleProperty(entity, property));
+			Search search = new Search(property, ReflectUtils.getInstance().getFieldValue(entity, property));
 			if(fieldNameAndTypePair.isCollectionType())
 			{
 				LOGGER.info("loading childen not child you see");
@@ -60,9 +58,19 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 			else
 			{
 				TvoEntity findOneBySearch = findOneBySearch(entityType, search);
-				setSimpleProperty(entity, fieldNameAndTypePair.getKey(), findOneBySearch);
+				ReflectUtils.getInstance().setFieldValue(entity, fieldNameAndTypePair.getKey(), findOneBySearch);
 			}
 		}
+	}
+	
+	public <T extends TvoEntity> T findOneByQuery(Class<T> entityType, Map<String, Object> parameters)
+	{
+		return findOneBySearch(entityType, getSearchFromMap(parameters));
+	}
+	
+	public <T extends TvoEntity> List<T> findAllByQuery(Class<T> entityType, Map<String, Object> parameters)
+	{
+		return findBySearch(entityType, getSearchFromMap(parameters));
 	}
 	
 	public <T extends TvoEntity> void fetchAllAssociations(T entity)
@@ -107,6 +115,21 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 			counter++;
 		}
 		return result.toString();
-	}	
+	}
 	
+	/*
+	 * Asset Specific methods
+	 */
+	
+	public void assetVideoSave(AssetVideo assetVideo)
+	{
+		AssetRoot assetRoot = assetVideo.getAssetRoot();
+		
+		saveOrUpdate(assetRoot);
+		String key = getIdColumn(assetRoot.getClass());
+		key = mapFieldName(key);
+		Object value = getIdValue(assetRoot);
+		ReflectUtils.getInstance().setFieldValue(assetVideo, key, value);
+		saveOrUpdate(assetVideo);
+	}
 }

@@ -47,6 +47,7 @@ public class TelescopeQuery {
 										   "editorial.id_seg",
 										   "editorial.id_elmnt",
 										   "editorial.type_elmnt",
+										   "editorial.ttl_prg",
 										   "editorial.ttl_tv_listing",
 										   "editorial.ttl_series",
 										   "editorial.ttl_web_dist",

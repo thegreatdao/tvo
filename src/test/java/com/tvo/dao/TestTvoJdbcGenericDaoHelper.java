@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.tvo.dao.util.TvoEntityFieldNameAndTypePair;
 import com.tvo.dao.util.TvoJdbcGenericDaoHelper;
+import com.tvo.dao.util.bean.TvoEntityFieldNameAndTypePair;
 import com.tvo.entity.AssetArticle;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;

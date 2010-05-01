@@ -178,9 +178,10 @@ public class TelescopeResult {
 	
 	public AssetVideo getAssetVideo() throws Exception {
 		AssetVideo assetVideo = new AssetVideo();
-		
+		AssetRoot assetRoot = new AssetRoot();
+		assetVideo.setAssetRoot(assetRoot);
+		assetRoot.setCreatedOn(new Date());
 		assetVideo.getAssetRoot().setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
-		assetVideo.getAssetRoot().setTitle(getTelescopeFieldValue("editorial.ttl_elmnt"));
 		assetVideo.getAssetRoot().setDescriptionInternet(getTelescopeFieldValue("editorial.desc_elmnt"));
 		assetVideo.setMasterSeriesNumber(getTelescopeFieldValue("editorial.id_series"));
 
@@ -194,9 +195,11 @@ public class TelescopeResult {
 			
 			TelescopeResult contentDigitalResult = this.telescopeQuery.getResult(assetContentDigitalId, TelescopeQuery.getDefaultFieldNames());
 			
-			assetVideo.getAssetRoot().setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_prg"));
-			assetVideo.getAssetRoot().setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
-			assetVideo.getAssetRoot().setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
+			String title = contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"); // TTL_WEB_DIST
+			
+			assetRoot.setTitle(title);
+			assetRoot.setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
+			assetRoot.setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
 		}
 		
 		
@@ -230,14 +233,13 @@ public class TelescopeResult {
 						return null;
 					}
 					
-					assetVideo.getAssetRoot().setUserTimeStart(df_releaseDate.parse(frmPublishStart));
-					assetVideo.getAssetRoot().setUserTimeEnd(df_releaseDate.parse(frmPublishEnd));
+					assetRoot.setUserTimeStart(df_releaseDate.parse(frmPublishStart));
+					assetRoot.setUserTimeEnd(df_releaseDate.parse(frmPublishEnd));
 					
 					// WE MAY NEED TO CHANGE THIS
-					assetVideo.getAssetRoot().setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
+					assetRoot.setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
 					
-					String tvoMainId = "67580125001";
-					BrightcoveResponse response = BrightcoveResponse.getResponse(tvoMainId);
+					BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
 					
 					assetVideo.setLength(response.getLength());
 					assetVideo.setVideoStillUrl(response.getVideoStillUrl());

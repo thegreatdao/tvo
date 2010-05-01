@@ -5,17 +5,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sakaiproject.genericdao.api.search.Search;
 
-import com.tvo.dao.TvoJdbcGenericDaoImpl;
+import com.tvo.dao.util.bean.TvoEntityFieldNameAndTypePair;
 import com.tvo.entity.TvoEntity;
 
 public class TvoJdbcGenericDaoHelper
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(TvoJdbcGenericDaoImpl.class);
 
 	public static <T extends TvoEntity> TvoEntityFieldNameAndTypePair getFiledNameAndType(T entity, Class<?> type)
 	{
@@ -42,35 +40,7 @@ public class TvoJdbcGenericDaoHelper
 			}
 		}
 		return fieldNameAndTypePair;
-	}
-
-	public static void setSimpleProperty(Object bean, String name, Object value)
-	{
-		try
-		{
-			PropertyUtils.setSimpleProperty(bean, name, value);
-		} 
-		catch (Exception e)
-		{
-			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
-			LOGGER.error(e.getMessage(), tvoReflectionException);
-			throw tvoReflectionException;
-		}
-	}
-
-	public static Object getSimpleProperty(Object bean, String name)
-	{
-		try
-		{
-			return PropertyUtils.getSimpleProperty(bean, name);
-		}
-		catch (Exception e)
-		{
-			TvoReflectionException tvoReflectionException = new TvoReflectionException(e);
-			LOGGER.error(e.getMessage(), tvoReflectionException);
-			throw tvoReflectionException;
-		}
-	}
+	}	
 
 	public static <T extends TvoEntity> List<Class<?>> getAllAssocaitions(Class<T> entityType)
 	{
@@ -96,17 +66,20 @@ public class TvoJdbcGenericDaoHelper
 			}
 		}
 		return associations;
-	}
+	}		
 	
-	private static class TvoReflectionException extends RuntimeException
+	public static Search getSearchFromMap(Map<String, Object> parameters)
 	{
-		private static final long serialVersionUID = 1776111410006763987L;
-
-		public TvoReflectionException(Throwable cause)
+		int size = parameters.size();
+		String[] properties = new String[size];
+		Object[] values = new Object[size];
+		int index = 0;
+		for(Map.Entry<String, Object> pair : parameters.entrySet())
 		{
-			super(cause);
-		}
-
+			properties[index] = pair.getKey();
+			values[index] = pair.getValue();
+			index++;
+		}		
+		return new Search(properties, values);
 	}
-
 }

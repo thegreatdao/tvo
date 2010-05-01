@@ -1,4 +1,4 @@
-package com.tvo.dao.util;
+package com.tvo.dao.util.bean;
 
 import java.io.Serializable;
 
