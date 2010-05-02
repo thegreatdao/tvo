@@ -82,6 +82,15 @@ public class TestTelescope
 							
 						break;
 						
+						
+						case PROGRAM:
+							AssetProgram assetProgram = result.get
+							System.out.println("> Found Program");
+							System.out.println("Record ID:" + )
+							
+							break;
+							
+						
 						default:
 							// System.out.println("Nothing to do.");
 							break;

@@ -16,6 +16,7 @@ import com.tvo.asset.AssetRoot.AssetType;
 */
 
 import com.tvo.brightcove.BrightcoveResponse;
+import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.*;
 import com.tvo.entity.AssetVideo;
@@ -104,16 +105,17 @@ public class TelescopeResult {
 	
 	private void populateAssetRoot(AssetRoot assetRootInstance) throws Exception {
 		assetRootInstance.setAssetType(this.getAssetType());
+		assetRootInstance.setCreatedOn(new Date());
 		assetRootInstance.setTelescopeRecordId(this.telescopeRecordId);
 		assetRootInstance.setSource(getTelescopeFieldValue("editorial.id_source"));
-		
+		 
 		String firstAirDate = getTelescopeFieldValue("first_air_v.first_air");
 		
 		String userTimeStart = getTelescopeFieldValue("frm.publish_start");
 		String userTimeEnd = getTelescopeFieldValue("frm.publish_end");
 		
 		if(!userTimeStart.isEmpty()) {
-			
+			 
 		}
 		
 		if(!userTimeEnd.isEmpty()) {
@@ -176,11 +178,18 @@ public class TelescopeResult {
 		return assetType;
 	}
 	
+	public AssetProgram getAssetProgram() throws Exception {
+		AssetProgram assetProgram = new AssetProgram();
+		AssetRoot assetRoot = new AssetRoot();
+		assetProgram.setAssetRoot(assetRoot);
+		return assetProgram;
+	}
+	
 	public AssetVideo getAssetVideo() throws Exception {
 		AssetVideo assetVideo = new AssetVideo();
 		AssetRoot assetRoot = new AssetRoot();
 		assetVideo.setAssetRoot(assetRoot);
-		assetRoot.setCreatedOn(new Date());
+		
 		assetVideo.getAssetRoot().setTelescopeAssetId(getTelescopeFieldValue("editorial.id_elmnt"));
 		assetVideo.getAssetRoot().setDescriptionInternet(getTelescopeFieldValue("editorial.desc_elmnt"));
 		assetVideo.setMasterSeriesNumber(getTelescopeFieldValue("editorial.id_series"));
@@ -195,13 +204,10 @@ public class TelescopeResult {
 			
 			TelescopeResult contentDigitalResult = this.telescopeQuery.getResult(assetContentDigitalId, TelescopeQuery.getDefaultFieldNames());
 			
-			String title = contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"); // TTL_WEB_DIST
-			
-			assetRoot.setTitle(title);
+			assetRoot.setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"));
 			assetRoot.setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
 			assetRoot.setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
 		}
-		
 		
 		int[] relatedFormAssetIds = this.telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.REQUESTED_MEDIA, RelationshipType.CHILD_TO_PARENT);
 		
@@ -247,7 +253,6 @@ public class TelescopeResult {
 					//assetVideo.setGeoFilter(GeoFilter.TEST_FILTER);
 					assetVideo.getAssetRoot().setGeoFilterId(1);
 				}
-
 			}
 			
 			if(isBrightcove == false) {
