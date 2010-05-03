@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.DomainPublish;
 
 @Repository
 public class AssetVideoDaoImpl implements AssetVideoDao
@@ -20,11 +21,11 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	@Autowired 
+	@Autowired
 	private TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
 	
 	/*
-	 * start date and end date format are as 2010-11-30
+	 * start date and end date formats are as 2010-11-30
 	 * @see com.tvo.dao.AssetVideoDao#findAssetVideosBetweenDates(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -42,6 +43,12 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 			tvoJdbcGenericDaoImpl.fetchOneAssociation(assetVideo, AssetRoot.class);
 		}
 		return result;
+	}
+
+	@Override
+	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, DomainPublish domainPublish)
+	{
+		
 	}
 
 }
