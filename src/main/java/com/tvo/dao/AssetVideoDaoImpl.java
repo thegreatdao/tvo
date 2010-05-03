@@ -19,7 +19,9 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	@Autowired TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
+	
+	@Autowired 
+	private TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
 	
 	/*
 	 * start date and end date format are as 2010-11-30
