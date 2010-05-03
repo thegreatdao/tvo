@@ -17,6 +17,7 @@ public class AssetVideoServiceImpl implements AssetVideoService
 	@Override
 	public List<AssetVideo> findAssetVideosByDates(String startDate, String endDate)
 	{
-		return assetVideoDao.findAssetVideosBetweenDates(startDate, endDate);	}
+		return assetVideoDao.findAssetVideosBetweenDates(startDate, endDate);
+	}
 
 }
