@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.tvo.databases.DbTelescope;
+import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetVideo;
 import com.tvo.service.TvoAssetsService;
 import com.tvo.service.TvoDaoService;
@@ -84,9 +85,11 @@ public class TestTelescope
 						
 						
 						case PROGRAM:
-							AssetProgram assetProgram = result.get
+							
+							AssetProgram assetProgram = result.getAssetProgram();
 							System.out.println("> Found Program");
-							System.out.println("Record ID:" + )
+							System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
+							
 							
 							break;
 							
