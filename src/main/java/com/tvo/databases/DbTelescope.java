@@ -1,7 +1,5 @@
 package com.tvo.databases;
 
-import java.sql.SQLException;
-
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DbTelescope {

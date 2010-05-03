@@ -4,3 +4,4 @@
 target/
 .springBeans
 tvo.log
+java.exe.stackdump

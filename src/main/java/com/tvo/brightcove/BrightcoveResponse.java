@@ -55,6 +55,7 @@ public class BrightcoveResponse {
 		return tokenSecret;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setTokenSecret(String tokenSecret) {
 		this.tokenSecret = tokenSecret;
 	}
@@ -137,7 +138,8 @@ public class BrightcoveResponse {
 	        	
 	        	String result = jsonObj.getString("result");
 	        	
-	        	int foo = 1;
+	        	@SuppressWarnings("unused")
+				int foo = 1;
 	        	
 	        	if(result == null) {
 	        		

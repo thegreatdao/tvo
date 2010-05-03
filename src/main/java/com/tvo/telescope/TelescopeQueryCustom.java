@@ -1,16 +1,14 @@
 package com.tvo.telescope;
 
-import java.util.ArrayList;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-import com.tvo.databases.DbTelescope;
-
-import java.io.StringReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import com.tvo.databases.DbTelescope;
 
 public class TelescopeQueryCustom {
 	

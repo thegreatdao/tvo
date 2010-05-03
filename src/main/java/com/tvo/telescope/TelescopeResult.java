@@ -29,6 +29,7 @@ public class TelescopeResult {
 	private AssetType assetType;
 	private NodeList childNodeList;
 	private int telescopeRecordId;
+	@SuppressWarnings("unused")
 	private int[] boundContainers;
 	private TelescopeQuery telescopeQuery;
 	
@@ -57,6 +58,7 @@ public class TelescopeResult {
 		return fieldValue;
 	}
 	
+	@SuppressWarnings("unused")
 	private String chaseTitle() {
 		
 		String programTitle = getTelescopeFieldValue("editorial.ttl_tv_listing");
@@ -80,6 +82,7 @@ public class TelescopeResult {
 		return programTitle;
 	}
 	
+	@SuppressWarnings("unused")
 	private String chaseDescription() {
 		
 		String programDescription = getTelescopeFieldValue("editorial.desc_tv_listing_short");
@@ -131,6 +134,7 @@ public class TelescopeResult {
 		assetRootInstance.setCreatedBy("SYSTEM");
 	}
 
+	@SuppressWarnings("unused")
 	private String getProgramOrSeriesTitle() {
 		
 		String title = null;
