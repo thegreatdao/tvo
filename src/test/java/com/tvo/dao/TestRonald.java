@@ -29,7 +29,7 @@ import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-transaction-db.xml")
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
 public class TestRonald
 {
@@ -75,14 +75,6 @@ public class TestRonald
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoUrl("videoUrl");
-		
-		domainPublish = new DomainPublish();
-		domainPublish.setCreatedBy("createdBy");
-		domainPublish.setCreatedOn(new Date());
-		domainPublish.setDomainNameId(3);
-		domainPublish.setPublished(true);
-		domainPublish.setUpdatedBy("updatedBy");
-		domainPublish.setUpdatedOn(new Date());
 	}
 
 	@Test
@@ -91,6 +83,7 @@ public class TestRonald
 		String[] domainList = new String[2];
 		domainList[0] = "tvo.org";
 		domainList[1] = "tvokids.org";
-		assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainList);
+		//assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainList);
+		assetVideoService.saveAssetVideo(assetVideo);
 	}
 }

@@ -10,4 +10,5 @@ public interface AssetVideoService
 {
 	public List<AssetVideo> findAssetVideosByDates(String startDate, String endDate);
 	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, String[] domain);
+	public void saveAssetVideo(AssetVideo assetVideo);
 }

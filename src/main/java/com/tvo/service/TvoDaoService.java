@@ -67,6 +67,8 @@ public class TvoDaoService
 		tvoJdbcGenericDaoImpl.assetVideoSave(assetVideo);
 	}
 	
+	
+	
 	/*
 	public <T extends TvoEntity> void assetProgramSave(AssetProgram assetProgram)
 	{
