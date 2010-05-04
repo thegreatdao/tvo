@@ -25,7 +25,7 @@ public class TestTelescope
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestTelescope.class);
 	
 	@Autowired
-	private TvoDaoService tvoDaoService;
+	private AssetVideoDao assetVideoDao;
 	
 	@Autowired
 	private AssetProgramDao assetProgramDao;
@@ -75,7 +75,7 @@ public class TestTelescope
 								System.out.println("> Found Video");
 								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
 								
-								tvoDaoService.assetVideoSave(assetVideo);
+								assetVideoDao.saveAssetVideo(assetVideo);
 								
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());
@@ -86,11 +86,13 @@ public class TestTelescope
 						
 						case PROGRAM:
 							try {
+								/*
 								AssetProgram assetProgram = result.getAssetProgram();
 								System.out.println("> Found Program");
 								System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
 								
 								assetProgramDao.save(assetProgram);
+								*/
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());
 							}

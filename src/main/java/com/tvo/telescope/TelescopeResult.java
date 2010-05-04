@@ -1,6 +1,8 @@
 package com.tvo.telescope;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;
 
 import org.w3c.dom.NamedNodeMap;
@@ -147,6 +149,31 @@ public class TelescopeResult {
 	public void setTelescopeQuery(TelescopeQuery telescopeQuery) {
 		this.telescopeQuery = telescopeQuery; 
 	}
+	
+	public String[] getPublishPointDomains(String publishPoint) {
+		
+		List<String> possibleDomains = new ArrayList<String>();
+		
+		if(publishPoint.contains("tvo.org")) {
+			possibleDomains.add("tvo.org");
+		}
+		
+		if(publishPoint.contains("tvokids")) {
+			possibleDomains.add("tvokids.org");
+		}
+		
+		if(publishPoint.contains("tvoparents")) {
+			possibleDomains.add("tvoparents.org");
+		}
+		
+		String[] domainsForAsset = new String[possibleDomains.size()];
+		
+		for(int i = 0; i < possibleDomains.size(); i++) {
+			domainsForAsset[i] = possibleDomains.get(i);
+		}
+		
+		return domainsForAsset;
+	}
 
 	public TelescopeResult(Node assetNode) {
 
@@ -223,16 +250,18 @@ public class TelescopeResult {
 				
 				TelescopeResult requestMediaFormResult = this.telescopeQuery.getResult(assetFormId, TelescopeQuery.getDefaultFieldNames());
 				
-				String publishPoint = requestMediaFormResult.getTelescopeFieldValue("frm.publish_point");
-				// System.out.println(assetFormId);
-				// telescopeResult.
-				// System.out.println("Found Related Form: " + assetFormId);
-				// TelescopeResult assetFormResult = this.telescopeQuery.
+				String publishPoint = requestMediaFormResult.getTelescopeFieldValue("frm.publish_point").toLowerCase();
 				System.out.println(publishPoint);
 
-				
-				if(publishPoint.toLowerCase().contains("brightcove")) {
+				if(publishPoint.contains("brightcove")) {
+					
 					isBrightcove = true;
+					
+					/*
+					 * Publish points. This tells us what website this asset is available to.
+					 */
+					
+					assetVideo.setDomains(getPublishPointDomains(publishPoint));
 					
 					SimpleDateFormat df_releaseDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 					
