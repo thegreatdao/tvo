@@ -76,4 +76,7 @@ public class AssetRoot extends TvoEntity
 	private String createdBy;
 	@XmlElement(name="updated_by")
 	private String updatedBy;
+	@PersistentTransient
+	@XmlElement(name="domain_name")
+	private String domainName;
 }

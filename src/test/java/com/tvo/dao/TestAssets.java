@@ -22,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.DomainPublish;
 import com.tvo.entity.AssetRoot.AssetType;
+import com.tvo.service.AssetVideoService;
 import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,9 +35,12 @@ public class TestAssets
 {
 	@Autowired
 	private TvoAssetsService assetsService;
+	@Autowired
+	private AssetVideoService assetVideoService;
 	
 	private AssetRoot assetRoot;
 	private AssetVideo assetVideo;
+	private DomainPublish domainPublish;
 	
 	@Before
 	public void setUp()
@@ -70,14 +75,23 @@ public class TestAssets
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoUrl("videoUrl");
-
+		
+		domainPublish = new DomainPublish();
+		domainPublish.setCreatedBy("createdBy");
+		domainPublish.setCreatedOn(new Date());
+		domainPublish.setDomainNameId(3);
+		domainPublish.setPublished(true);
+		domainPublish.setUpdatedBy("updatedBy");
+		domainPublish.setUpdatedOn(new Date());
 	}
 
 	@Test
 	public void testAssetRootWithAssetVideo()
 	{
 		int initSizeOfAssetVideo = assetsService.findAll(AssetVideo.class).size();
-		assetsService.saveParentWithChild(assetRoot, assetVideo);
+		assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainPublish);
+		assertNotNull(domainPublish.getAssetRootId());
+		assertTrue(domainPublish.getAssetRootId() == assetRoot.getAssetRootId());
 		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());
 		assertNotNull(assetVideo.getAssetVideoId());

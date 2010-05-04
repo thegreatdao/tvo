@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.sakaiproject.genericdao.api.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.DomainName;
+import com.tvo.entity.DomainPublish;
 
 @Repository
 public class AssetVideoDaoImpl implements AssetVideoDao
@@ -20,11 +23,11 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	@Autowired 
+	@Autowired
 	private TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
 	
 	/*
-	 * start date and end date format are as 2010-11-30
+	 * start date and end date formats are as 2010-11-30
 	 * @see com.tvo.dao.AssetVideoDao#findAssetVideosBetweenDates(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -40,8 +43,19 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		for(AssetVideo assetVideo : result)
 		{
 			tvoJdbcGenericDaoImpl.fetchOneAssociation(assetVideo, AssetRoot.class);
+			DomainPublish domainPublish = tvoJdbcGenericDaoImpl.findOneBySearch(DomainPublish.class, new Search("assetRootId", assetVideo.getAssetRootId()));
+			DomainName domainName = tvoJdbcGenericDaoImpl.findById(DomainName.class, domainPublish.getDomainNameId());
+			assetVideo.getAssetRoot().setDomainName(domainName.getDomainName());
 		}
 		return result;
+	}
+
+	@Override
+	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, DomainPublish domainPublish)
+	{
+		tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
+		domainPublish.setAssetRootId(assetRoot.getAssetRootId());
+		tvoJdbcGenericDaoImpl.save(domainPublish);
 	}
 
 }

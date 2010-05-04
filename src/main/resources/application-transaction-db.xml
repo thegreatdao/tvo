@@ -52,6 +52,16 @@
 		<property name="tableName" value="asset_video" />
 	</bean>
 
+	<bean id="simpleDomainPublishMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+		<property name="persistentClassname" value="com.tvo.entity.DomainPublish" />
+		<property name="tableName" value="domain_publish" />
+	</bean>
+
+	<bean id="simpleDomainNameMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+		<property name="persistentClassname" value="com.tvo.entity.DomainName" />
+		<property name="tableName" value="domain_name" />
+	</bean>
+	
 	<bean id="tvoJdbcGenericDao" class="com.tvo.dao.TvoJdbcGenericDaoImpl">
 		<property name="dataSource" ref="tvoDataSource" />
 		<property name="databaseType" value="MYSQL" />
@@ -59,6 +69,8 @@
 			<list>
 				<ref bean="simpleAssetRootdataMapper" />
 				<ref bean="simpleAssetViedodataMapper" />
+				<ref bean="simpleDomainPublishMapper" />
+				<ref bean="simpleDomainNameMapper" />
 			</list>
 		</property>
 	</bean>
