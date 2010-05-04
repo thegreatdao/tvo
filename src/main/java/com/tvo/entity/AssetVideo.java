@@ -50,4 +50,6 @@ public class AssetVideo extends TvoEntity {
 	private AssetRoot assetRoot;
 	@PersistentTransient
 	private List<AssetArticle> assetArticles;
+	@PersistentTransient
+	private String[] domains;
 }

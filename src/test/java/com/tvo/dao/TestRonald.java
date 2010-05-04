@@ -65,6 +65,7 @@ public class TestRonald
 		assetRoot.setUserTimeStart(new Date());
 
 		assetVideo = new AssetVideo();
+		assetVideo.setAssetRoot(assetRoot);
 		assetVideo.setBcRefId("bcRefId");
 		assetVideo.setEmbedCode(true);
 		assetVideo.setLength(68);
@@ -75,15 +76,27 @@ public class TestRonald
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoStillUrl("videoStillUrl");
 		assetVideo.setVideoUrl("videoUrl");
-	}
-
-	@Test
-	public void justInsert()
-	{
+		
 		String[] domainList = new String[2];
 		domainList[0] = "tvo.org";
 		domainList[1] = "tvokids.org";
-		//assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainList);
+		assetVideo.setDomains(domainList);
+	}
+
+
+	public void justInsert()
+	{
 		assetVideoService.saveAssetVideo(assetVideo);
+	}
+	
+	@Test
+	public void justLoad()
+	{
+		List<AssetVideo> assetVideos = assetVideoService.findAssetVideosByDates("2010-02-05", "2010-05-06");
+		
+		for(AssetVideo assetVideo : assetVideos) 
+		{
+			System.out.println("ID: " + assetVideo.getAssetVideoId());
+		}
 	}
 }

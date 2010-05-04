@@ -33,20 +33,45 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	@Override
 	public List<AssetVideo> findAssetVideosBetweenDates(String startDate, String endDate)
 	{
-		String sql = "select * from asset_video video join asset_root root on video.asset_root_id = root.asset_root_id " +
-				"where root.created_on between :startDate and :endDate";
-		Map<String, String> paramMap = new HashMap<String, String>();
+		String sql;
+		Map<String, String> paramMap;
+		
+		sql = "select * from asset_video video join asset_root root on video.asset_root_id = root.asset_root_id " +
+			  "where root.created_on between :startDate and :endDate";
+		
+		paramMap = new HashMap<String, String>();
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		RowMapper<AssetVideo> rm = ParameterizedBeanPropertyRowMapper.newInstance(AssetVideo.class);
 		List<AssetVideo> result = namedParameterJdbcTemplate.query(sql, paramMap, rm);
+		
 		for(AssetVideo assetVideo : result)
 		{
 			tvoJdbcGenericDaoImpl.fetchOneAssociation(assetVideo, AssetRoot.class);
-			DomainPublish domainPublish = tvoJdbcGenericDaoImpl.findOneBySearch(DomainPublish.class, new Search("assetRootId", assetVideo.getAssetRootId()));
-			DomainName domainName = tvoJdbcGenericDaoImpl.findById(DomainName.class, domainPublish.getDomainNameId());
-			assetVideo.getAssetRoot().setDomainName(domainName.getDomainName());
+			
+			/*
+			 * For now we will lazy load
+			 */
+			
+			sql = "SELECT domain_name.* FROM domain_name " +
+			      "INNER JOIN domain_publish ON(domain_name.domain_name_id=domain_publish.domain_name_id) " +
+			      "WHERE domain_publish.asset_root_id=:assetRootId";
+		
+			paramMap = new HashMap<String, String>();
+			paramMap.put("assetRootId", assetVideo.getAssetRootId().toString());
+			RowMapper<DomainName> domainNameRowMapper = ParameterizedBeanPropertyRowMapper.newInstance(DomainName.class);
+			List<DomainName> domainNameList = namedParameterJdbcTemplate.query(sql, paramMap, domainNameRowMapper);
+			
+			String[] domainNames = new String[domainNameList.size()];
+			
+			for(int i = 0; i < domainNameList.size(); i++)
+			{
+				domainNames[i] = domainNameList.get(i).getDomainName();
+			}
+			
+			assetVideo.setDomains(domainNames);
 		}
+		
 		return result;
 	}
 
@@ -88,15 +113,11 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		AssetRoot assetRoot = assetVideo.getAssetRoot();
 		tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
 		
+		List<DomainName> domainNames = tvoJdbcGenericDaoImpl.findAll(DomainName.class); 
 		
-		//tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
-		
-		//List<DomainName> domainNames = tvoJdbcGenericDaoImpl.findAll(DomainName.class); 
-		
-		/*
 		boolean domainsMatch = false;
 		
-		for(String domainNameStr : domain)
+		for(String domainNameStr : assetVideo.getDomains())
 		{
 			domainsMatch = false;
 			
@@ -116,6 +137,5 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 			if(domainsMatch == false)
 				throw new Error("Domain " + domainNameStr + " does not exist.");
 		}
-		*/
 	}
 }
