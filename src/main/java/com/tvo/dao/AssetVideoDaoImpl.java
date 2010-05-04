@@ -50,12 +50,35 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		return result;
 	}
 
+
 	@Override
-	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, DomainPublish domainPublish)
+	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, String[] domain)
 	{
 		tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
-		domainPublish.setAssetRootId(assetRoot.getAssetRootId());
-		tvoJdbcGenericDaoImpl.save(domainPublish);
+		
+		List<DomainName> domainNames = tvoJdbcGenericDaoImpl.findAll(DomainName.class); 
+		
+		boolean domainsMatch = false;
+		
+		for(String domainNameStr : domain)
+		{
+			domainsMatch = false;
+			
+			for(DomainName domainName : domainNames) 
+			{
+				if(domainName.getDomainName().equals(domainNameStr)) 
+				{
+					domainsMatch = true;
+					DomainPublish domainPublish = new DomainPublish();
+					domainPublish.setDomainNameId(domainName.getDomainNameId());
+					domainPublish.setAssetRootId(assetRoot.getAssetRootId());
+					domainPublish.setPublished(true);
+					tvoJdbcGenericDaoImpl.save(domainPublish);
+				}
+			}
+			
+			if(domainsMatch == false)
+				throw new Error("Domain " + domainNameStr + " does not exist.");
+		}
 	}
-
 }

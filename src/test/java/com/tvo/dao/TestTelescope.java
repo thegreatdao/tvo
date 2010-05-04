@@ -27,6 +27,9 @@ public class TestTelescope
 	@Autowired
 	private TvoDaoService tvoDaoService;
 	
+	@Autowired
+	private AssetProgramDao assetProgramDao;
+	
 	@Test
 	public void testTelescopeVideoAsset() throws Throwable
 	{
@@ -72,9 +75,8 @@ public class TestTelescope
 								System.out.println("> Found Video");
 								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
 								
+								tvoDaoService.assetVideoSave(assetVideo);
 								
-								//tvoDaoService.assetVideoSave(assetVideo);
-								tvoDaoService.saveParentWithChild(assetVideo.getAssetRoot(), assetVideo);
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());
 							}
@@ -83,12 +85,16 @@ public class TestTelescope
 						
 						
 						case PROGRAM:
-							
-							AssetProgram assetProgram = result.getAssetProgram();
-							System.out.println("> Found Program");
-							System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
-							
-							
+							try {
+								AssetProgram assetProgram = result.getAssetProgram();
+								System.out.println("> Found Program");
+								System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
+								
+								assetProgramDao.save(assetProgram);
+							} catch(Error error) {
+								LOGGER.error("Error: " + error.getMessage());
+							}
+								
 							break;
 							
 						

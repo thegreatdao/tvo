@@ -89,9 +89,11 @@ public class TestAssets
 	public void testAssetRootWithAssetVideo()
 	{
 		int initSizeOfAssetVideo = assetsService.findAll(AssetVideo.class).size();
-		assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainPublish);
-		assertNotNull(domainPublish.getAssetRootId());
-		assertTrue(domainPublish.getAssetRootId() == assetRoot.getAssetRootId());
+		
+		String[] domainList = new String[2];
+		domainList[0] = "tvo.org";
+		domainList[1] = "tvokids.org";
+		assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainList);
 		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());
 		assertNotNull(assetVideo.getAssetVideoId());

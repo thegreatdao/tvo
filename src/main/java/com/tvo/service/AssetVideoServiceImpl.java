@@ -26,10 +26,10 @@ public class AssetVideoServiceImpl implements AssetVideoService
 	}
 
 	@Override
-	@Transactional(readOnly=true)
-	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, DomainPublish domainPublish)
+	//@Transactional(readOnly=true)
+	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, String[] domain)
 	{
-		assetVideoDao.saveAssetVideo(assetVideo, assetRoot, domainPublish);
+		assetVideoDao.saveAssetVideo(assetVideo, assetRoot, domain);
 	}
 
 }

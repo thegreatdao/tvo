@@ -9,5 +9,5 @@ import com.tvo.entity.DomainPublish;
 public interface AssetVideoService
 {
 	public List<AssetVideo> findAssetVideosByDates(String startDate, String endDate);
-	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, DomainPublish domainPublish);
+	public void saveAssetVideo(AssetVideo assetVideo, AssetRoot assetRoot, String[] domain);
 }
