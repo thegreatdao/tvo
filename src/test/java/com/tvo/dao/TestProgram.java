@@ -1,15 +1,6 @@
 package com.tvo.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.AssetType;
-import com.tvo.service.AssetVideoService;
-import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-transaction-db.xml")

@@ -1,17 +1,13 @@
 package com.tvo.entity;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import org.sakaiproject.genericdao.api.annotations.PersistentColumnName;
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
 import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 
@@ -25,6 +21,8 @@ public class AssetProgram extends TvoEntity {
 	
 	@PersistentId
 	private Integer assetProgramId;
+	
+	private Integer assetRootId;
 	
 	@PersistentTransient
 	@XmlElement(name="root")
