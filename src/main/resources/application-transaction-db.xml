@@ -47,9 +47,14 @@
 		<property name="tableName" value="asset_root" />
 	</bean>
 
-	<bean id="simpleAssetViedodataMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+	<bean id="simpleAssetVideodataMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
 		<property name="persistentClassname" value="com.tvo.entity.AssetVideo" />
 		<property name="tableName" value="asset_video" />
+	</bean>
+	
+	<bean id="simpleAssetProgramdataMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+		<property name="persistentClassname" value="com.tvo.entity.AssetProgram" />
+		<property name="tableName" value="asset_program" />
 	</bean>
 
 	<bean id="simpleDomainPublishMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
@@ -68,7 +73,8 @@
 		<property name="dataMappers">
 			<list>
 				<ref bean="simpleAssetRootdataMapper" />
-				<ref bean="simpleAssetViedodataMapper" />
+				<ref bean="simpleAssetVideodataMapper" />
+				<ref bean="simpleAssetProgramdataMapper" />
 				<ref bean="simpleDomainPublishMapper" />
 				<ref bean="simpleDomainNameMapper" />
 			</list>

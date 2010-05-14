@@ -86,13 +86,13 @@ public class TestTelescope
 						
 						case PROGRAM:
 							try {
-								/*
+								
 								AssetProgram assetProgram = result.getAssetProgram();
 								System.out.println("> Found Program");
 								System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
 								
 								assetProgramDao.save(assetProgram);
-								*/
+								
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());
 							}
