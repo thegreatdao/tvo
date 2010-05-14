@@ -17,14 +17,13 @@ import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-@XmlRootElement(name="video")
+@XmlRootElement(name="program")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AssetProgram extends TvoEntity {
 	
 	private static final long serialVersionUID = 6049312423966660328L;
 	
 	@PersistentId
-	@PersistentTransient
 	private Integer assetProgramId;
 	
 	@PersistentTransient

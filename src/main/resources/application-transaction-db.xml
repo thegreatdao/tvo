@@ -56,7 +56,7 @@
 		<property name="persistentClassname" value="com.tvo.entity.AssetProgram" />
 		<property name="tableName" value="asset_program" />
 	</bean>
-
+	 
 	<bean id="simpleDomainPublishMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
 		<property name="persistentClassname" value="com.tvo.entity.DomainPublish" />
 		<property name="tableName" value="domain_publish" />
