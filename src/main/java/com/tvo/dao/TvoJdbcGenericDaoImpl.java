@@ -23,7 +23,7 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 {	
 	protected static final Logger LOGGER = LoggerFactory.getLogger(TvoJdbcGenericDaoImpl.class);
 	
-	public <T extends TvoEntity> void saveParentWithChild(T parent, T child)
+	public <T extends TvoEntity> int saveParentWithChild(T parent, T child)
 	{
 		saveOrUpdate(parent);
 		String key = getIdColumn(parent.getClass());
@@ -31,6 +31,25 @@ public class TvoJdbcGenericDaoImpl extends JdbcGeneralGenericDao
 		Object value = getIdValue(parent);
 		ReflectUtils.getInstance().setFieldValue(child, key, value);
 		saveOrUpdate(child);
+		
+		return Integer.parseInt(value.toString());
+	}
+	
+	public <T extends TvoEntity> int[] saveParentWithChildAndReturnGeneratedIds(T parent, T child)
+	{
+		saveOrUpdate(parent);
+		String key = getIdColumn(parent.getClass());
+		key = mapFieldName(key);
+		Object generatedIdParent = getIdValue(parent);
+		ReflectUtils.getInstance().setFieldValue(child, key, generatedIdParent);
+		saveOrUpdate(child);
+		Object generatedIdChild = getIdValue(child);
+		
+		int[] returnValues = new int[2];
+		returnValues[0] = Integer.parseInt(generatedIdParent.toString());
+		returnValues[1] = Integer.parseInt(generatedIdChild.toString());
+		
+		return returnValues;
 	}
 	
 	public <T extends TvoEntity> void saveOrUpdate(T entity)

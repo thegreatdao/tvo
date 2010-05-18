@@ -20,8 +20,9 @@ public class AssetProgramDaoImpl implements AssetProgramDao
 	private TvoJdbcGenericDaoImpl tvoJdbcGenericDaoImpl;
 
 	@Override
-	public void save(AssetProgram assetProgram)
-	{
-		tvoJdbcGenericDaoImpl.saveParentWithChild(assetProgram.getAssetRoot(), assetProgram);
+	public int save(AssetProgram assetProgram)
+	{		
+		int[] generatedIds = tvoJdbcGenericDaoImpl.saveParentWithChildAndReturnGeneratedIds(assetProgram.getAssetRoot(), assetProgram);
+		return generatedIds[1];
 	}
 }

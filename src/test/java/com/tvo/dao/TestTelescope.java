@@ -16,6 +16,8 @@ import com.tvo.entity.AssetVideo;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
 import com.tvo.telescope.TelescopeResult;
+import com.tvo.telescope.TelescopeRelationship.Containers;
+import com.tvo.telescope.TelescopeRelationship.RelationshipType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-context.xml")
@@ -63,11 +65,22 @@ public class TestTelescope
 		    		
 		    		switch(result.getAssetType())
 					{
-						case VIDEO: 
+						case VIDEO:
 							
 							try {
+								
 								AssetVideo assetVideo = result.getAssetVideo();
-
+								
+								int[] programIds = telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.CONTENT_DIGITAL, RelationshipType.CHILD_TO_PARENT);
+								int programId = programIds[0];
+								
+								TelescopeResult programResult = telescopeQuery.getResult(programId, TelescopeQuery.getDefaultFieldNames());
+								
+								AssetProgram assetVideoBoundProgram = programResult.getAssetProgram();
+								int assetProgramId = assetProgramDao.save(assetVideoBoundProgram);
+								
+								assetVideo.setAssetProgramId(assetProgramId);
+								
 								LOGGER.debug("> Found Video");
 								LOGGER.debug("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
 								

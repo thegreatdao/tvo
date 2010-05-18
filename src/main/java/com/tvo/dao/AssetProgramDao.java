@@ -8,5 +8,5 @@ public interface AssetProgramDao
 {
 	//public List<AssetProgram> findAssetVideosBetweenDates(String startDate, String endDate);
 	
-	public void save(AssetProgram assetProgram);
+	public int save(AssetProgram assetProgram);
 }

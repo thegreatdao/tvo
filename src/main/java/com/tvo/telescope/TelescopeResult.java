@@ -213,6 +213,9 @@ public class TelescopeResult {
 		AssetProgram assetProgram = new AssetProgram();
 		AssetRoot assetRoot = new AssetRoot();
 		assetProgram.setAssetRoot(assetRoot);
+		
+		populateAssetRoot(assetRoot);
+		
 		return assetProgram;
 	}
 	
@@ -238,6 +241,10 @@ public class TelescopeResult {
 			assetRoot.setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"));
 			assetRoot.setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
 			assetRoot.setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
+		
+			/*
+			 * Save underlying program asset 
+			 */
 		}
 		
 		int[] relatedFormAssetIds = this.telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.REQUESTED_MEDIA, RelationshipType.CHILD_TO_PARENT);

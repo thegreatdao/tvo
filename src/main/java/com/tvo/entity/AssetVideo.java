@@ -27,6 +27,7 @@ public class AssetVideo extends TvoEntity {
 	private Integer assetVideoId;
 	@XmlTransient
 	private Integer assetRootId;
+	private Integer assetProgramId;
 	private Integer length;
 	@XmlElement(name="link_url")
 	private String linkUrl;
