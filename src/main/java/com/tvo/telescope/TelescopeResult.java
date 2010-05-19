@@ -216,6 +216,10 @@ public class TelescopeResult {
 		
 		populateAssetRoot(assetRoot);
 		
+		assetRoot.setTitle(chaseTitle());
+		assetRoot.setDescriptionInternet(chaseDescription());
+		assetRoot.setDescriptionShort(getTelescopeFieldValue("editorial.desc_tagline"));
+		
 		return assetProgram;
 	}
 	
@@ -241,7 +245,7 @@ public class TelescopeResult {
 			assetRoot.setTitle(contentDigitalResult.getTelescopeFieldValue("editorial.ttl_web_dist"));
 			assetRoot.setDescriptionInternet(contentDigitalResult.getTelescopeFieldValue("editorial.desc_web_dist"));
 			assetRoot.setDescriptionShort(contentDigitalResult.getTelescopeFieldValue("editorial.desc_tagline"));
-		
+			
 			/*
 			 * Save underlying program asset 
 			 */

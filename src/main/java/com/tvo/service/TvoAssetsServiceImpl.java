@@ -1,6 +1,7 @@
 package com.tvo.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.dao.TvoJdbcGenericDaoImpl;
+import com.tvo.entity.AssetRoot;
 import com.tvo.entity.TvoEntity;
 
 @Service
@@ -67,5 +69,23 @@ public class TvoAssetsServiceImpl implements TvoAssetsService
 	public <T extends TvoEntity> T findOneBySearch(Class<T> entityType, Map<String, Object> parameters)
 	{
 		return tvoJdbcGenericDaoImpl.findOneByQuery(entityType, parameters);
+	}
+	
+	@Transactional(readOnly=true)
+	public <T extends TvoEntity> T findAssetByAssetRootId(Class<T> entityType, int assetRootId)
+	{
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("assetRootId", assetRootId);
+		return tvoJdbcGenericDaoImpl.findOneByQuery(entityType, searchMap);
+	}
+	
+	@Transactional(readOnly=true)
+	public AssetRoot findAssetByTelescopeAssetId(String telescopeRecordId)
+	{
+		Map<String, Object> searchMapTelescopeAssetId = new HashMap<String, Object>();
+		searchMapTelescopeAssetId.put("telescopeAssetId", telescopeRecordId);
+	
+		AssetRoot existingAssetRootRecord = this.findOneBySearch(AssetRoot.class, searchMapTelescopeAssetId);
+		return existingAssetRootRecord;
 	}
 }

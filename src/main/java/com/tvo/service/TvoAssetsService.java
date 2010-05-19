@@ -4,14 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.tvo.entity.AssetProgram;
+import com.tvo.entity.AssetRoot;
 import com.tvo.entity.TvoEntity;
 
 public interface TvoAssetsService
 {
-	
 	public <T extends TvoEntity> void saveParentWithChild(T parent, T child);
 	
-	public <T extends TvoEntity>void saveOrUpdate(T entity);
+	public <T extends TvoEntity> void saveOrUpdate(T entity);
 
 	public <T extends TvoEntity> boolean delete(Class<T> entityType, Serializable id);
 
@@ -26,4 +27,9 @@ public interface TvoAssetsService
 	public <T extends TvoEntity> List<T> findAllBySearch(Class<T> entityType, Map<String, Object> parameters);
 	
 	public <T extends TvoEntity> T findOneBySearch(Class<T> entityType, Map<String, Object> parameters);
+
+	public <T extends TvoEntity> T findAssetByAssetRootId(Class<T> entityType, int assetRootId);
+	
+	public AssetRoot findAssetByTelescopeAssetId(String assetId);
+	
 }

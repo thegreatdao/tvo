@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
 import com.tvo.entity.DomainPublish;
@@ -40,6 +41,7 @@ public class TestAssets
 	
 	private AssetRoot assetRoot;
 	private AssetVideo assetVideo;
+	private AssetProgram assetProgram;
 	private DomainPublish domainPublish;
 	
 	@Before
@@ -83,6 +85,33 @@ public class TestAssets
 		domainPublish.setPublished(true);
 		domainPublish.setUpdatedBy("updatedBy");
 		domainPublish.setUpdatedOn(new Date());
+		
+		
+		/*
+		 * Asset program is now required for asset video to work.
+		 */
+		
+		assetProgram = new AssetProgram();
+		AssetRoot assetRootProgram = new AssetRoot();
+		assetProgram.setAssetRoot(assetRootProgram);
+		
+		assetRootProgram.setAgeRating("12");
+		assetRootProgram.setAssetType(AssetType.PROGRAM);
+		assetRootProgram.setCreatedBy("createdBy");
+		assetRootProgram.setCreatedOn(new Date());
+		assetRootProgram.setDescriptionInternet("descriptionInternet");
+		assetRootProgram.setDescriptionShort("descriptionShort");
+		assetRootProgram.setDuration(new Date());
+		assetRootProgram.setGeoFilterId(1);
+		assetRootProgram.setReleaseDate(new Date());
+		assetRootProgram.setSource("source");
+		assetRootProgram.setTelescopeAssetId("telescopeAssetId");
+		assetRootProgram.setTelescopeRecordId(1);
+		assetRootProgram.setTitle("title");
+		assetRootProgram.setUpdatedBy("updatedBy");
+		assetRootProgram.setUpdatedOn(new Date());
+		assetRootProgram.setUserTimeEnd(new Date());
+		assetRootProgram.setUserTimeStart(new Date());
 	}
 
 	@Test
@@ -93,7 +122,9 @@ public class TestAssets
 		String[] domainList = new String[2];
 		domainList[0] = "tvo.org";
 		domainList[1] = "tvokids.org";
-		assetVideoService.saveAssetVideo(assetVideo, assetRoot, domainList);
+		assetVideo.setDomains(domainList);
+		assetVideoService.saveAssetVideo(assetVideo);
+		
 		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());
 		assertNotNull(assetVideo.getAssetVideoId());

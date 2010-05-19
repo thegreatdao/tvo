@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.tvo.databases.DbTelescope;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetVideo;
+import com.tvo.service.AssetProgramService;
+import com.tvo.service.AssetVideoService;
 import com.tvo.telescope.TelescopeConnection;
 import com.tvo.telescope.TelescopeQuery;
 import com.tvo.telescope.TelescopeResult;
@@ -26,10 +28,10 @@ public class TestTelescope
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestTelescope.class);
 	
 	@Autowired
-	private AssetVideoDao assetVideoDao;
+	private AssetVideoService assetVideoService;
 	
 	@Autowired
-	private AssetProgramDao assetProgramDao;
+	private AssetProgramService assetProgramService;
 	
 	@Test
 	public void testTelescopeVideoAsset() throws Throwable
@@ -77,7 +79,7 @@ public class TestTelescope
 								TelescopeResult programResult = telescopeQuery.getResult(programId, TelescopeQuery.getDefaultFieldNames());
 								
 								AssetProgram assetVideoBoundProgram = programResult.getAssetProgram();
-								int assetProgramId = assetProgramDao.save(assetVideoBoundProgram);
+								int assetProgramId = assetProgramService.save(assetVideoBoundProgram);
 								
 								assetVideo.setAssetProgramId(assetProgramId);
 								
@@ -87,7 +89,7 @@ public class TestTelescope
 								System.out.println("> Found Video");
 								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
 								
-								assetVideoDao.saveAssetVideo(assetVideo);
+								assetVideoService.saveAssetVideo(assetVideo);
 								
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());
@@ -103,7 +105,7 @@ public class TestTelescope
 								System.out.println("> Found Program");
 								System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
 								
-								assetProgramDao.save(assetProgram);
+								assetProgramService.save(assetProgram);
 								
 							} catch(Error error) {
 								LOGGER.error("Error: " + error.getMessage());

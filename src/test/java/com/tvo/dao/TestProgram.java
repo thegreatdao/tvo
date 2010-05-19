@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.AssetType;
+import com.tvo.service.AssetProgramService;
+import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-transaction-db.xml")
@@ -22,8 +24,8 @@ import com.tvo.entity.AssetRoot.AssetType;
 public class TestProgram
 {	
 	@Autowired
-	private AssetProgramDao assetProgramDao;
-	
+	private AssetProgramService assetProgramService;
+		
 	private AssetRoot assetRoot;
 	private AssetProgram assetProgram;
 	
@@ -56,6 +58,13 @@ public class TestProgram
 	@Test
 	public void testassetProgramWithAssetVideo()
 	{
-		assetProgramDao.save(assetProgram);
+		AssetProgram existingAssetProgram = assetProgramService.getByTelescopeAssetId(assetProgram.getAssetRoot().getTelescopeAssetId());
+		
+		if(existingAssetProgram != null) {
+			assetProgram.getAssetRoot().setAssetRootId(existingAssetProgram.getAssetRootId());
+			assetProgram.setAssetProgramId(existingAssetProgram.getAssetProgramId());
+		}
+		
+		assetProgramService.save(assetProgram);
 	}
 }
