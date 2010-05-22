@@ -51,16 +51,18 @@ public class TestTelescope
     	try {
 	    	TelescopeQuery telescopeQuery = new TelescopeQuery(telescopeConnection);
 	    	Calendar startDate = Calendar.getInstance();
-	    	startDate.set(2010, 04 -1 , 23, 16, 0);
+	    	startDate.set(2010, 05 -1 , 20, 10, 0);
 	    	
 	    	Calendar endDate = Calendar.getInstance();
-	    	endDate.set(2010, 04 - 1, 23, 20, 0);
+	    	endDate.set(2010, 05 - 1, 20, 11, 0);
 	    	
 	    	//int[] assets = TelescopeQueryCustom.getFullVideoAssets(startDate.getTime(), endDate.getTime());
-	    	int[] assets = telescopeQuery.getAssetsByDate(startDate.getTime(), endDate.getTime());
+	    	//int[] assets = telescopeQuery.getAssetsByDate(startDate.getTime(), endDate.getTime());
+	    	int[] assets = { 1828115 };
+	    	
 	    	
 	    	if(assets.length > 0) {
-	    		System.out.println("- Found " + assets.length + " assets, writing XML");
+	    		System.out.println("Found " + assets.length + " asset(s), writing XML");
 	    		TelescopeResult[] results = telescopeQuery.getResultSet(assets, TelescopeQuery.getDefaultFieldNames()); //TelescopeQuery.getDefaultFieldNames());
 	    	
 		    	for(TelescopeResult result : results) {
@@ -73,26 +75,46 @@ public class TestTelescope
 								
 								AssetVideo assetVideo = result.getAssetVideo();
 								
-								int[] programIds = telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.CONTENT_DIGITAL, RelationshipType.CHILD_TO_PARENT);
-								int programId = programIds[0];
+								AssetVideo existingAssetVideo = assetVideoService.getAssetVideoByTelescopeAssetId(assetVideo.getAssetRoot().getTelescopeAssetId());
 								
-								TelescopeResult programResult = telescopeQuery.getResult(programId, TelescopeQuery.getDefaultFieldNames());
+								if(existingAssetVideo != null) {
+									assetVideo.setAssetVideoId(existingAssetVideo.getAssetVideoId());
+									assetVideo.getAssetRoot().setAssetRootId(existingAssetVideo.getAssetRootId());
 								
-								AssetProgram assetVideoBoundProgram = programResult.getAssetProgram();
-								int assetProgramId = assetProgramService.save(assetVideoBoundProgram);
-								
-								assetVideo.setAssetProgramId(assetProgramId);
-								
-								LOGGER.debug("> Found Video");
-								LOGGER.debug("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
-								
-								System.out.println("> Found Video");
-								System.out.println("Record ID:" + assetVideo.getAssetRoot().getTelescopeRecordId());
+									String msg = "> Updating Video: " + assetVideo.getAssetRoot().getTelescopeRecordId();
+									System.out.println(msg);
+									LOGGER.info(msg);
+								} else {
+									
+									int[] programIds = telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.CONTENT_DIGITAL, RelationshipType.CHILD_TO_PARENT);
+									int programId = programIds[0];
+									
+									TelescopeResult programResult = telescopeQuery.getResult(programId, TelescopeQuery.getDefaultFieldNames());
+									
+									AssetProgram assetVideoBoundProgram = programResult.getAssetProgram();
+									
+									AssetProgram existingProgram = assetProgramService.getByTelescopeAssetId(assetVideoBoundProgram.getAssetRoot().getTelescopeAssetId());
+									
+									
+									int assetProgramId = 0;
+									
+									if(existingProgram != null) {
+										assetProgramId = existingProgram.getAssetProgramId();
+									} else {
+										assetProgramId = assetProgramService.save(assetVideoBoundProgram);
+									}
+									
+									assetVideo.setAssetProgramId(assetProgramId);
+									
+									String msg = "> Adding Video: " + assetVideo.getAssetRoot().getTelescopeRecordId();
+									System.out.println(msg);
+									LOGGER.info(msg);
+								}
 								
 								assetVideoService.saveAssetVideo(assetVideo);
 								
 							} catch(Error error) {
-								LOGGER.error("Error: " + error.getMessage());
+								LOGGER.error("Error processing video asset: " + error.getMessage());
 							}
 							
 						break;
@@ -102,13 +124,27 @@ public class TestTelescope
 							try {
 								
 								AssetProgram assetProgram = result.getAssetProgram();
-								System.out.println("> Found Program");
-								System.out.println("Record ID:" + assetProgram.getAssetRoot().getTelescopeRecordId());
+								AssetProgram existingProgram = assetProgramService.getByTelescopeAssetId(assetProgram.getAssetRoot().getTelescopeAssetId());
+								
+								if(existingProgram != null) {
+									assetProgram.setAssetProgramId(existingProgram.getAssetProgramId());
+									assetProgram.getAssetRoot().setAssetRootId(existingProgram.getAssetRootId());
+									
+									String msg = "> Updating Program: " + assetProgram.getAssetRoot().getTelescopeRecordId();
+									System.out.println(msg);
+									LOGGER.info(msg);
+								
+								} else {
+									
+									String msg = "> Adding Program: " + assetProgram.getAssetRoot().getTelescopeRecordId();
+									System.out.println(msg);
+									LOGGER.info(msg);
+								}
 								
 								assetProgramService.save(assetProgram);
 								
 							} catch(Error error) {
-								LOGGER.error("Error: " + error.getMessage());
+								LOGGER.error("Error processing program asset: " + error.getMessage());
 							}
 								
 							break;
@@ -138,5 +174,4 @@ public class TestTelescope
     	DbTelescope.close();
     	System.out.println("Finished...");
     }
-    
 }

@@ -219,6 +219,7 @@ public class TelescopeResult {
 		assetRoot.setTitle(chaseTitle());
 		assetRoot.setDescriptionInternet(chaseDescription());
 		assetRoot.setDescriptionShort(getTelescopeFieldValue("editorial.desc_tagline"));
+		assetRoot.setTelescopeAssetId(getTelescopeFieldValue("editorial.id_prg"));
 		
 		return assetProgram;
 	}

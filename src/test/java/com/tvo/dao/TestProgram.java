@@ -15,7 +15,6 @@ import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.service.AssetProgramService;
-import com.tvo.service.TvoAssetsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-transaction-db.xml")

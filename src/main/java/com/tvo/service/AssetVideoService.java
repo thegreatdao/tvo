@@ -10,5 +10,5 @@ public interface AssetVideoService
 {
 	public List<AssetVideo> findAssetVideosByDates(String startDate, String endDate);
 	public void saveAssetVideo(AssetVideo assetVideo);
-	public AssetVideo getAssetVideoByTelescopeRecordId(String telescopeRecordId);
+	public AssetVideo getAssetVideoByTelescopeAssetId(String telescopeAssetId);
 }

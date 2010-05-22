@@ -38,7 +38,7 @@ public class AssetVideoServiceImpl implements AssetVideoService
 		assetVideoDao.saveAssetVideo(assetVideo);
 	}
 	
-	public AssetVideo getAssetVideoByTelescopeRecordId(String assetId)
+	public AssetVideo getAssetVideoByTelescopeAssetId(String assetId)
 	{
 		AssetVideo assetVideo = null;
 		AssetRoot existingAssetRootRecord = assetsService.findAssetByTelescopeAssetId(assetId);
