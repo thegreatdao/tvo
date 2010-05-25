@@ -68,7 +68,7 @@
 	</bean>
 	
 	<bean id="simpleBrightcoveIdMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
-		<property name="persistentClassname" value="com.tvo.entity.Brightcove" />
+		<property name="persistentClassname" value="com.tvo.entity.BrightcoveId" />
 		<property name="tableName" value="brightcove_id" />
 	</bean>
 	
@@ -82,6 +82,7 @@
 				<ref bean="simpleAssetProgramdataMapper" />
 				<ref bean="simpleDomainPublishMapper" />
 				<ref bean="simpleDomainNameMapper" />
+				<ref bean="simpleBrightcoveIdMapper" />
 			</list>
 		</property>
 	</bean>

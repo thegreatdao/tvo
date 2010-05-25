@@ -123,7 +123,7 @@ public class TestAssets
 		domainList[0] = "tvo.org";
 		domainList[1] = "tvokids.org";
 		assetVideo.setDomains(domainList);
-		assetVideoService.saveAssetVideo(assetVideo);
+		assetVideoService.save(assetVideo);
 		
 		assetsService.fetchOneAssociation(assetVideo, AssetRoot.class);
 		assertNotNull(assetRoot.getAssetRootId());

@@ -33,9 +33,9 @@ public class AssetVideoServiceImpl implements AssetVideoService
 	}
 
 	@Override
-	public void saveAssetVideo(AssetVideo assetVideo)
+	public void save(AssetVideo assetVideo)
 	{
-		assetVideoDao.saveAssetVideo(assetVideo);
+		assetVideoDao.save(assetVideo);
 	}
 	
 	public AssetVideo getAssetVideoByTelescopeAssetId(String assetId)

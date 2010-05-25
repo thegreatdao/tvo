@@ -45,6 +45,6 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 		sql = "DELETE FROM domain_publish WHERE asset_root_id=:assetRootId";
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("assetRootId", Integer.toString(assetRootId));
-		namedParameterJdbcTemplate.queryForInt(sql, paramMap);
+		namedParameterJdbcTemplate.update(sql, paramMap);
 	}
 }

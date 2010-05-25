@@ -78,7 +78,7 @@ public class TestRonald
 
 	public void justInsert()
 	{
-		assetVideoService.saveAssetVideo(assetVideo);
+		assetVideoService.save(assetVideo);
 	}
 	
 	@Test

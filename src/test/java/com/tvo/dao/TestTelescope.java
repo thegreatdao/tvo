@@ -110,8 +110,8 @@ public class TestTelescope
 									LOGGER.info(msg);
 								}
 								
-								assetVideoService.saveAssetVideo(assetVideo);
-								
+								assetVideoService.save(assetVideo);
+
 							} catch(Error error) {
 								LOGGER.error("Error processing video asset: " + error.getMessage());
 							}

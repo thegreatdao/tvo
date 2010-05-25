@@ -46,7 +46,7 @@ public class AssetVideo extends TvoEntity {
 	private String videoUrl;
 	@XmlElement(name="bc_ref_id")
 	private String bcRefId;
-	@PersistentTransient
+	@PersistentTransient 
 	@XmlElement(name="root")
 	private AssetRoot assetRoot;
 	@PersistentTransient

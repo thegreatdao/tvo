@@ -61,7 +61,7 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	}
 
 	@Override
-	public void saveAssetVideo(AssetVideo assetVideo)
+	public void save(AssetVideo assetVideo)
 	{
 		AssetRoot assetRoot = assetVideo.getAssetRoot();
 		tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
