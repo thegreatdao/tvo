@@ -36,7 +36,6 @@ public class TestTelescope
 	@Test
 	public void testTelescopeVideoAsset() throws Throwable
 	{
-		
     	System.out.println("Starting...");
     	 
     	TelescopeConnection telescopeConnection = new TelescopeConnection();
@@ -59,7 +58,6 @@ public class TestTelescope
 	    	//int[] assets = TelescopeQueryCustom.getFullVideoAssets(startDate.getTime(), endDate.getTime());
 	    	//int[] assets = telescopeQuery.getAssetsByDate(startDate.getTime(), endDate.getTime());
 	    	int[] assets = { 1828115 };
-	    	
 	    	
 	    	if(assets.length > 0) {
 	    		System.out.println("Found " + assets.length + " asset(s), writing XML");
@@ -84,6 +82,7 @@ public class TestTelescope
 									String msg = "> Updating Video: " + assetVideo.getAssetRoot().getTelescopeRecordId();
 									System.out.println(msg);
 									LOGGER.info(msg);
+									
 								} else {
 									
 									int[] programIds = telescopeQuery.getRelated(assetVideo.getAssetRoot().getTelescopeRecordId(), Containers.CONTENT_DIGITAL, RelationshipType.CHILD_TO_PARENT);

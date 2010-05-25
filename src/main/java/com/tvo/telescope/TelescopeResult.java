@@ -290,6 +290,7 @@ public class TelescopeResult {
 					// WE MAY NEED TO CHANGE THIS
 					assetRoot.setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
 					
+					//BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
 					BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
 					
 					assetVideo.setLength(response.getLength());

@@ -17,8 +17,8 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate; 
 	
-	public String[] getDomainsByAssetId(int assetRootId)
-	{
+	public String[] getDomainsByAssetId(int assetRootId) {
+		
 		String sql;
 		
 		sql = "SELECT domain_name.* FROM domain_name " +
@@ -32,11 +32,19 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 		
 		String[] domainNames = new String[domainNameList.size()];
 		
-		for(int i = 0; i < domainNameList.size(); i++)
-		{
+		for(int i = 0; i < domainNameList.size(); i++) {
 			domainNames[i] = domainNameList.get(i).getDomainName();
 		}
 	
 		return domainNames;
+	}
+	
+	public void deleteDomainsByAssetId(int assetRootId) {
+		String sql;
+		
+		sql = "DELETE FROM domain_publish WHERE asset_root_id=:assetRootId";
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("assetRootId", Integer.toString(assetRootId));
+		namedParameterJdbcTemplate.queryForInt(sql, paramMap);
 	}
 }

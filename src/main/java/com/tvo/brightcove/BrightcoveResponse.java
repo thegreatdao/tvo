@@ -12,9 +12,8 @@ public class BrightcoveResponse {
 	
 	private static String tokenSecret = "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
 	// private static String tokenSecret = "6vie5IAaEOFagDJOKUy4qDSpU3DWjNqh13vd8cM7IZvYapep4Upfzw."; // KIDS
-	
-	private int assetVideoId;
-	private String tvoMainId;
+
+	private int brightCoveVideoId;
 	private int length;
 	
 	private String videoStillUrl;
@@ -43,10 +42,6 @@ public class BrightcoveResponse {
 		return thumbnailUrl;
 	}
 
-	public String getTvoMainId() {
-		return tvoMainId;
-	}
-	
 	public void setAssetVideoId(int assetVideoId) {
 		this.assetVideoId = assetVideoId;
 	}
@@ -100,8 +95,8 @@ public class BrightcoveResponse {
 		this.updatedBy = updatedBy;
 	}
 
-	public int getAssetVideoId() {
-		return assetVideoId;
+	public int getBrightCoveVideoId() {
+		return brightCoveVideoId;
 	}
 	
 	public static BrightcoveResponse getResponseByTelescopeAssetId(String tvoMainId) throws Exception {
@@ -129,7 +124,7 @@ public class BrightcoveResponse {
 	        //JSONObject jsonObj = new JSONObject(errorTest);
 	        
 	        try {
-		        response.tvoMainId = jsonObj.getString("id");
+		        response.brightCoveVideoId = jsonObj.getString("id");
 		        response.length = Integer.parseInt(jsonObj.getString("length"));
 		        response.videoStillUrl = jsonObj.getString("videoStillURL");
 		        response.thumbnailUrl = jsonObj.getString("thumbnailURL");
@@ -149,6 +144,29 @@ public class BrightcoveResponse {
 	        }
 	        
 	        return response;
+	}
+	
+	public static String getUrlToken(String domainName) {
+		
+		String secretToken = null;
+		
+		if(domainName.equals("tvomain.org")) {
+			return "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
+		}
+		
+		if(domainName.equals("tvo.org")) {
+			return "0fmmXNVgKkPeT7msJNLHr4qmSgYRFIga5IgfQVUv0f_yzKvs2-dSWQ..";
+		}
+		
+		if(domainName.equals("tvokids.org")) {
+			return "coe-nT4ylJHlpfeOLCm1udUEHHBRLa8w60zjaP3tl9mzepn-NBp4Ug..";
+		}
+
+		if(domainName.equals("tvoparents.org")) {
+			return "8Kc4N2hA_vHv1v6DlZ-mnxFFz6BpWynpHqEncpA-UnwX8oIyi9xc4g..";
+		}
+		
+		return secretToken;
 	}
 	
 	public static void main(String[] args) throws Throwable {

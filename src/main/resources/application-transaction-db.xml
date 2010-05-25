@@ -21,7 +21,7 @@
 						   http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
 	<context:property-placeholder location="classpath:app.properties" />
-	<context:component-scan base-package="com.tvo.service,com.tvo.dao" />
+	<context:component-scan base-package="com.tvo.service,com.tvo.dao, com.tvo.generic" />
 	
 	<bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" name="namedParameterJdbcTemplate">
 		<constructor-arg ref="tvoDataSource"/>
@@ -65,6 +65,11 @@
 	<bean id="simpleDomainNameMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
 		<property name="persistentClassname" value="com.tvo.entity.DomainName" />
 		<property name="tableName" value="domain_name" />
+	</bean>
+	
+	<bean id="simpleBrightcoveIdMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+		<property name="persistentClassname" value="com.tvo.entity.Brightcove" />
+		<property name="tableName" value="brightcove_id" />
 	</bean>
 	
 	<bean id="tvoJdbcGenericDao" class="com.tvo.dao.TvoJdbcGenericDaoImpl">

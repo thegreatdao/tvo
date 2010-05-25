@@ -2,15 +2,19 @@ package com.tvo.dao;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sun.xml.internal.ws.api.PropertySet.Property;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetRoot.AssetType;
@@ -27,6 +31,9 @@ public class TestProgram
 		
 	private AssetRoot assetRoot;
 	private AssetProgram assetProgram;
+	
+	@Property("somethingTest")
+	private String testSetting;
 	
 	@Before
 	public void setUp()
@@ -57,6 +64,7 @@ public class TestProgram
 	@Test
 	public void testassetProgramWithAssetVideo()
 	{
+		/*
 		AssetProgram existingAssetProgram = assetProgramService.getByTelescopeAssetId(assetProgram.getAssetRoot().getTelescopeAssetId());
 		
 		if(existingAssetProgram != null) {
@@ -65,5 +73,11 @@ public class TestProgram
 		}
 		
 		assetProgramService.save(assetProgram);
+		*/
+		//testSetting = $('')
+		
+		
+		
+		System.out.println(testSetting);
 	}
 }

@@ -70,6 +70,14 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		
 		boolean domainsMatch = false;
 		
+		if(assetRoot.getAssetRootId() != 0) {
+			/*
+			 * we need to purge domains from this record to make sure we do not create duplicates
+			 */
+			 
+			domainPublishImpl.deleteDomainsByAssetId(assetRoot.getAssetRootId());
+		}
+		
 		for(String domainNameStr : assetVideo.getDomains())
 		{
 			domainsMatch = false;
