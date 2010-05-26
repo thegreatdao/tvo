@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import org.sakaiproject.genericdao.api.annotations.PersistentColumnName;
 import org.sakaiproject.genericdao.api.annotations.PersistentId;
 import org.sakaiproject.genericdao.api.annotations.PersistentTransient;
 

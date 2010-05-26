@@ -10,7 +10,6 @@ import com.tvo.dao.AssetVideoDao;
 import com.tvo.dao.DomainPublishDao;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
-import com.tvo.entity.DomainPublish;
 
 @Service
 @Transactional
