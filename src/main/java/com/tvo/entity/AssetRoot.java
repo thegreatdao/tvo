@@ -31,12 +31,12 @@ public class AssetRoot extends TvoEntity
 	@PersistentTransient
 	public AssetType getAssetType()
 	{
-		return AssetType.valueOf(this.asset_Type);
+		return AssetType.valueOf(this.assetType);
 	}
 
 	public void setAssetType(AssetType typeCategory)
 	{
-		this.asset_Type = typeCategory.toString();
+		this.assetType = typeCategory.toString();
 	}
 	
 	@PersistentId
@@ -49,7 +49,7 @@ public class AssetRoot extends TvoEntity
 	private String source;
 	
 	@XmlElement(name="type")
-	private String asset_Type;
+	private String assetType;
 	private String descriptionInternet;
 	private String descriptionShort;
 	private String ageRating;

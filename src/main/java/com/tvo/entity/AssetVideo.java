@@ -25,32 +25,31 @@ public class AssetVideo extends TvoEntity {
 	
 	@PersistentId
 	private Integer assetVideoId;
+	
 	@XmlTransient
 	private Integer assetRootId;
 	private Integer assetProgramId;
 	private Integer length;
-	@XmlElement(name="link_url")
 	private String linkUrl;
-	@XmlElement(name="link_title")
 	private String linkTitle;
-	@XmlElement(name="msn")
 	private String masterSeriesNumber;
-	@XmlElement(name="iec")
+	
 	@PersistentColumnName("is_embed_code")
 	private boolean embedCode;
-	@XmlElement(name="thumbnail_url")
 	private String thumbnailUrl;
-	@XmlElement(name="videostill_url")
 	private String videoStillUrl;
-	@XmlElement(name="video_url")
 	private String videoUrl;
-	@XmlElement(name="bc_ref_id")
 	private String bcRefId;
+	
 	@PersistentTransient 
-	@XmlElement(name="root")
 	private AssetRoot assetRoot;
+	
 	@PersistentTransient
 	private List<AssetArticle> assetArticles;
+	
 	@PersistentTransient
 	private String[] domains;
+	
+	@PersistentTransient
+	private BrightcoveId[] brightcoveId;
 }

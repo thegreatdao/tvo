@@ -9,196 +9,156 @@ import java.util.Date;
 import org.codehaus.jettison.json.JSONObject;
 
 public class BrightcoveResponse {
-	private static String tokenSecret = "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
-	// private static String tokenSecret =
-	// "6vie5IAaEOFagDJOKUy4qDSpU3DWjNqh13vd8cM7IZvYapep4Upfzw."; // KIDS
+    
+    private String brightcoveVideoId;
+    private int length;
 
-	private String brightCoveVideoId;
-	private int length;
+    private String videoStillUrl;
+    private String thumbnailUrl;
+    private String referenceId;
 
-	private String videoStillUrl;
-	private String thumbnailUrl;
-	private String referenceId;
+    private String domainName;
+    private Date createdOn;
+    private Date updatedOn;
+    private String createdBy;
+    private String updatedBy;
 
-	private String domainName;
-	private Date createdOn;
-	private Date updatedOn;
-	private String createdBy;
-	private String updatedBy;
+    public String getReferenceId() {
+    	return referenceId;
+    }
 
-	public String getReferenceId()
-	{
-		return referenceId;
-	}
+    public int getLength() {
+    	return length;
+    }
 
-	public int getLength()
-	{
-		return length;
-	}
+    public String getVideoStillUrl() {
+    	return videoStillUrl;
+    }
 
-	public String getVideoStillUrl()
-	{
-		return videoStillUrl;
-	}
+    public String getThumbnailUrl() {
+    	return thumbnailUrl;
+    }
 
-	public String getThumbnailUrl()
-	{
-		return thumbnailUrl;
-	}
+    public String getDomainName() {
+    	return domainName;
+    }
 
-	public String getTokenSecret()
-	{
-		return tokenSecret;
-	}
+    public void setDomainName(String domainName) {
+    	this.domainName = domainName;
+    }
 
-	@SuppressWarnings("static-access")
-	public void setTokenSecret(String tokenSecret)
-	{
-		this.tokenSecret = tokenSecret;
-	}
+    public Date getCreatedOn() {
+    	return createdOn;
+    }
 
-	public String getDomainName()
-	{
-		return domainName;
-	}
+    public void setCreatedOn(Date createdOn) {
+    	this.createdOn = createdOn;
+    }
 
-	public void setDomainName(String domainName)
-	{
-		this.domainName = domainName;
-	}
+    public Date getUpdatedOn() {
+    	return updatedOn;
+    }
 
-	public Date getCreatedOn()
-	{
-		return createdOn;
-	}
+    public void setUpdatedOn(Date updatedOn) {
+    	this.updatedOn = updatedOn;
+    }
 
-	public void setCreatedOn(Date createdOn)
-	{
-		this.createdOn = createdOn;
-	}
+    public String getCreatedBy() {
+    	return createdBy;
+    }
 
-	public Date getUpdatedOn()
-	{
-		return updatedOn;
-	}
+    public void setCreatedBy(String createdBy) {
+    	this.createdBy = createdBy;
+    }
 
-	public void setUpdatedOn(Date updatedOn)
-	{
-		this.updatedOn = updatedOn;
-	}
+    public String getUpdatedBy() {
+    	return updatedBy;
+    }
 
-	public String getCreatedBy()
-	{
-		return createdBy;
-	}
+    public void setUpdatedBy(String updatedBy) {
+    	this.updatedBy = updatedBy;
+    }
 
-	public void setCreatedBy(String createdBy)
-	{
-		this.createdBy = createdBy;
-	}
+    public String getBrightcoveVideoId() {
+    	return brightcoveVideoId;
+    }
 
-	public String getUpdatedBy()
-	{
-		return updatedBy;
-	}
+    public static BrightcoveResponse getResponseByTelescopeAssetId(String telescopeReferenceId, String tokenSecret) throws Exception {
 
-	public void setUpdatedBy(String updatedBy)
-	{
-		this.updatedBy = updatedBy;
-	}
+    	BrightcoveResponse response = new BrightcoveResponse();
+    
+    	String brightcoveRequestUrl = "http://api.brightcove.com/services/library?command=find_video_by_reference_id&reference_id=" + telescopeReferenceId + "&token=" + tokenSecret;
+    	HttpURLConnection connection = (HttpURLConnection) new URL(brightcoveRequestUrl).openConnection();
+    
+    	connection.setRequestMethod("GET");
+    	connection.getInputStream();
+    
+    	BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    	StringBuilder jsonResponseSb = new StringBuilder();
+    	String line;
+    
+    	while ((line = rd.readLine()) != null) {
+    	    jsonResponseSb.append(line + '\n');
+    	}
+    
+    	String brightcoveResponseJsonText = jsonResponseSb.toString();
+    
+    	JSONObject jsonObj = new JSONObject(brightcoveResponseJsonText);
+    	// String errorTest =
+    	// "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
+    	// JSONObject jsonObj = new JSONObject(errorTest);
+    
+    	try {
+    	    response.brightcoveVideoId = jsonObj.getString("id");
+    	    response.length = Integer.parseInt(jsonObj.getString("length"));
+    	    response.videoStillUrl = jsonObj.getString("videoStillURL");
+    	    response.thumbnailUrl = jsonObj.getString("thumbnailURL");
+    	    response.referenceId = jsonObj.getString("referenceId");
+    	} catch (Exception ex) {
+    
+    	    ex.printStackTrace();
+    
+    	    String result = jsonObj.getString("result");
+    
+    	    @SuppressWarnings("unused")
+    	    int foo = 1;
+    
+    	    if (result == null) {
+    	    	
+    	    }
+    	}
+    
+    	return response;
+    }
 
-	public String getBrightCoveVideoId()
-	{
-		return brightCoveVideoId;
-	}
+    public static String getUrlToken(String domainName) {
+    	String secretToken = null;
+    
+    	if (domainName.equals("tvomain.org")) {
+    	    return "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
+    	}
+    
+    	if (domainName.equals("tvo.org")) {
+    	    return "0fmmXNVgKkPeT7msJNLHr4qmSgYRFIga5IgfQVUv0f_yzKvs2-dSWQ..";
+    	}
+    
+    	if (domainName.equals("tvokids.org")) {
+    	    return "coe-nT4ylJHlpfeOLCm1udUEHHBRLa8w60zjaP3tl9mzepn-NBp4Ug..";
+    	}
+    
+    	if (domainName.equals("tvoparents.org")) {
+    	    return "8Kc4N2hA_vHv1v6DlZ-mnxFFz6BpWynpHqEncpA-UnwX8oIyi9xc4g..";
+    	}
+    
+    	return secretToken;
+    }
 
-	public static BrightcoveResponse getResponseByTelescopeAssetId(String tvoMainId) throws Exception {
-
-		BrightcoveResponse response = new BrightcoveResponse();
-
-		String brightcoveRequestUrl = "http://api.brightcove.com/services/library?command=find_video_by_reference_id&reference_id="
-				+ tvoMainId + "&token=" + tokenSecret;
-		HttpURLConnection connection = (HttpURLConnection) new URL(
-				brightcoveRequestUrl).openConnection();
-
-		connection.setRequestMethod("GET");
-		connection.getInputStream();
-
-		BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		StringBuilder jsonResponseSb = new StringBuilder();
-		String line;
-
-		while ((line = rd.readLine()) != null) {
-			jsonResponseSb.append(line + '\n');
-		}
-
-		String brightcoveResponseJsonText = jsonResponseSb.toString();
-
-		JSONObject jsonObj = new JSONObject(brightcoveResponseJsonText);
-		// String errorTest =
-		// "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
-		// JSONObject jsonObj = new JSONObject(errorTest);
-
-		try
-		{
-			response.brightCoveVideoId = jsonObj.getString("id");
-			response.length = Integer.parseInt(jsonObj.getString("length"));
-			response.videoStillUrl = jsonObj.getString("videoStillURL");
-			response.thumbnailUrl = jsonObj.getString("thumbnailURL");
-			response.referenceId = jsonObj.getString("referenceId");
-		} catch (Exception ex)
-		{
-
-			ex.printStackTrace();
-
-			String result = jsonObj.getString("result");
-
-			@SuppressWarnings("unused")
-			int foo = 1;
-
-			if (result == null)
-			{
-
-			}
-		}
-
-		return response;
-	}
-
-	public static String getUrlToken(String domainName)
-	{
-
-		String secretToken = null;
-
-		if (domainName.equals("tvomain.org"))
-		{
-			return "MP_rS39dA8YulIl2n8RCXx1evpJ5GUDlzQypNYRBpTU.";
-		}
-
-		if (domainName.equals("tvo.org"))
-		{
-			return "0fmmXNVgKkPeT7msJNLHr4qmSgYRFIga5IgfQVUv0f_yzKvs2-dSWQ..";
-		}
-
-		if (domainName.equals("tvokids.org"))
-		{
-			return "coe-nT4ylJHlpfeOLCm1udUEHHBRLa8w60zjaP3tl9mzepn-NBp4Ug..";
-		}
-
-		if (domainName.equals("tvoparents.org"))
-		{
-			return "8Kc4N2hA_vHv1v6DlZ-mnxFFz6BpWynpHqEncpA-UnwX8oIyi9xc4g..";
-		}
-
-		return secretToken;
-	}
-
-	public static void main(String[] args) throws Throwable
-	{
-
-		BrightcoveResponse brightcoveResponse = BrightcoveResponse
-				.getResponseByTelescopeAssetId("1837282190");
-		System.out.println(brightcoveResponse.videoStillUrl);
-	}
+    /*
+     * public static void main(String[] args) throws Throwable {
+     * 
+     * BrightcoveResponse brightcoveResponse = BrightcoveResponse
+     * .getResponseByTelescopeAssetId("1837282190");
+     * System.out.println(brightcoveResponse.videoStillUrl); }
+     */
 
 }

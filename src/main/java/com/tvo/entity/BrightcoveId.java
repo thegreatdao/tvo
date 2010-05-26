@@ -14,8 +14,8 @@ public class BrightcoveId extends TvoEntity
 	private static final long serialVersionUID = 4859796326760602519L;
 
 	@PersistentId
-	private Integer brightcove_id;
-	private String brightcove_video_id;
+	private Integer brightcoveId;
+	private String brightcoveVideoId;
 	private Date createdOn;
 	private Date updatedOn;
 	private String createdBy;

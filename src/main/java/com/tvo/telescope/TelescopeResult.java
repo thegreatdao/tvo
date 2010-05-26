@@ -20,6 +20,7 @@ import com.tvo.asset.AssetRoot.AssetType;
 import com.tvo.brightcove.BrightcoveResponse;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
+import com.tvo.entity.BrightcoveId;
 import com.tvo.entity.AssetRoot.*;
 import com.tvo.entity.AssetVideo;
 
@@ -256,7 +257,7 @@ public class TelescopeResult {
 		
 		if(relatedFormAssetIds != null) {
 			
-			boolean isBrightcove = false;
+		    boolean isBrightcove = false;
 			
 			for(int assetFormId : relatedFormAssetIds) {
 				
@@ -291,14 +292,27 @@ public class TelescopeResult {
 					assetRoot.setReleaseDate(df_releaseDate.parse(requestMediaFormResult.getTelescopeFieldValue("frm.publish_start")));
 					
 					//BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
-					BrightcoveResponse response = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId());
-					
-					assetVideo.setLength(response.getLength());
-					assetVideo.setVideoStillUrl(response.getVideoStillUrl());
-					assetVideo.setThumbnailUrl(response.getThumbnailUrl());
-					//assetVideo.setGeoFilter(GeoFilter.TEST_FILTER);
+					BrightcoveResponse bcResponse = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId(), BrightcoveResponse.getUrlToken("tvomain.org"));
+					assetVideo.setLength(bcResponse.getLength());
+					assetVideo.setVideoStillUrl(bcResponse.getVideoStillUrl());
+					assetVideo.setThumbnailUrl(bcResponse.getThumbnailUrl());
 					assetVideo.getAssetRoot().setGeoFilterId(1);
+					
+					BrightcoveId[] brightcoveId = new BrightcoveId[assetVideo.getDomains().length + 1];
+					brightcoveId[0] = new BrightcoveId();
+					brightcoveId[0].setBrightcoveVideoId(bcResponse.getBrightcoveVideoId());
+					
+					//for(String domain : assetVideo.getDomains()) {
+					for(int i = 0; i < assetVideo.getDomains().length; i++) {
+						bcResponse = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId(), BrightcoveResponse.getUrlToken(assetVideo.getDomains()[i]));
+						
+						BrightcoveId domainBrightcoveId = new BrightcoveId();
+						domainBrightcoveId.setBrightcoveVideoId(bcResponse.getBrightcoveVideoId());
+						domainBrightcoveId.setCreatedOn(new Date());
+						domainBrightcoveId.setCreatedBy("SYSTEM");
+					}
 				}
+				//assetVideo.setGeoFilter(GeoFilter.TEST_FILTER);
 			}
 			
 			if(isBrightcove == false) {
