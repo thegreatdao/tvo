@@ -24,5 +24,4 @@ public class DomainPublish extends TvoEntity
 	private Date updatedOn;
 	private String createdBy;
 	private String updatedBy;
-	
 }

@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.BrightcoveId;
 import com.tvo.entity.DomainName;
 import com.tvo.entity.DomainPublish;
 
 @Repository
 public class AssetVideoDaoImpl implements AssetVideoDao
 {
-
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
@@ -27,6 +27,9 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	
 	@Autowired
 	private DomainPublishDaoImpl domainPublishImpl;
+	
+	@Autowired
+	private BrightcoveIdDaoImpl brightcoveIdImpl;
 	
 	/*
 	 * start date and end date formats are as 2010-11-30
@@ -47,11 +50,27 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		paramMap.put("endDate", endDate);
 		RowMapper<AssetVideo> rm = ParameterizedBeanPropertyRowMapper.newInstance(AssetVideo.class);
 		List<AssetVideo> result = namedParameterJdbcTemplate.query(sql, paramMap, rm);
+		List<DomainName> allDomainNames = domainPublishImpl.getAll();
 		
 		for(AssetVideo assetVideo : result)
 		{
 			tvoJdbcGenericDaoImpl.fetchOneAssociation(assetVideo, AssetRoot.class);
-			assetVideo.setDomains(domainPublishImpl.getDomainsByAssetId(assetVideo.getAssetRootId()));
+			List<DomainName> domainNames = domainPublishImpl.getDomainsByAssetId(assetVideo.getAssetRootId());
+			
+			assetVideo.setDomains(DomainPublishDaoImpl.convertGenericToString(domainNames));
+			
+			BrightcoveId[] brightcoveIds = brightcoveIdImpl.getBrightcoveIdsByAssetVideoId(assetVideo.getAssetVideoId());
+			
+			for(int i = 0; i < brightcoveIds.length; i++) {
+				DomainName foundDomain = DomainPublishDaoImpl.getByDomainId(allDomainNames, brightcoveIds[i].getDomainNameId());
+				
+				//String domainNameStr = DomainPublishDaoImpl.getByDomainName(domainNameList, domainNameSearch) brightcoveIds[i].getDomainNameId();
+				brightcoveIds[i].setDomainName(foundDomain.getDomainName());
+				
+				//domainNamesStr[] = domainNames[i].getDomainName()
+			}
+			
+			assetVideo.setBrightcoveIds(brightcoveIds);
 		}
 		
 		return result;
@@ -61,6 +80,9 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	public void save(AssetVideo assetVideo)
 	{
 		AssetRoot assetRoot = assetVideo.getAssetRoot();
+		//int[] generatedIds = tvoJdbcGenericDaoImpl.saveParentWithChildAndReturnGeneratedIds(assetRoot, assetVideo);
+		//int assetRootGeneratedId = generatedIds[0];
+		//int assetVideoGeneratedId = generatedIds[1];
 		tvoJdbcGenericDaoImpl.saveParentWithChild(assetRoot, assetVideo);
 		
 		List<DomainName> domainNames = tvoJdbcGenericDaoImpl.findAll(DomainName.class); 
@@ -94,6 +116,19 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 			
 			if(domainsMatch == false)
 				throw new Error("Domain " + domainNameStr + " does not exist.");
+		}
+		
+		/*
+		 * Write brightcove information
+		 */
+		
+		brightcoveIdImpl.deleteBrightcoveIdsByAssetVideoId(assetVideo.getAssetVideoId());
+		
+		for(BrightcoveId brightcoveId : assetVideo.getBrightcoveIds()) {
+			brightcoveId.setAssetVideoId(assetVideo.getAssetVideoId());
+			DomainName domainToAdd = DomainPublishDaoImpl.getByDomainName(domainNames, brightcoveId.getDomainName());
+			brightcoveId.setDomainNameId(domainToAdd.getDomainNameId());
+			brightcoveIdImpl.save(brightcoveId);
 		}
 	}
 }

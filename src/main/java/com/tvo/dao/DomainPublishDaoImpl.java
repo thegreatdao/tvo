@@ -17,7 +17,10 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate; 
 	
-	public String[] getDomainsByAssetId(int assetRootId) {
+	@Autowired
+	private TvoJdbcGenericDaoImpl tvoJdbcGenericDao;
+	
+	public List<DomainName> getDomainsByAssetId(int assetRootId) {
 		
 		String sql;
 		
@@ -27,16 +30,23 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("assetRootId", Integer.toString(assetRootId));
+		
+		return innerQuery(sql, paramMap);
+	}
+	
+	public List<DomainName> getAll() {
+		
+		String sql = "SELECT domain_name.* FROM domain_name";
+		
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		return innerQuery(sql, paramMap);
+	}
+	
+	private List<DomainName> innerQuery(String sql, HashMap<String, String> paramMap) {
+		
 		RowMapper<DomainName> domainNameRowMapper = ParameterizedBeanPropertyRowMapper.newInstance(DomainName.class);
 		List<DomainName> domainNameList = namedParameterJdbcTemplate.query(sql, paramMap, domainNameRowMapper);
-		
-		String[] domainNames = new String[domainNameList.size()];
-		
-		for(int i = 0; i < domainNameList.size(); i++) {
-			domainNames[i] = domainNameList.get(i).getDomainName();
-		}
-	
-		return domainNames;
+		return domainNameList;
 	}
 	
 	public void deleteDomainsByAssetId(int assetRootId) {
@@ -46,5 +56,53 @@ public class DomainPublishDaoImpl implements DomainPublishDao
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("assetRootId", Integer.toString(assetRootId));
 		namedParameterJdbcTemplate.update(sql, paramMap);
+	}
+	
+	public static DomainName getByDomainName(List<DomainName> domainNameList, String domainNameSearch) {
+		
+		DomainName domainNameObj = null;
+		
+		for(DomainName domainName : domainNameList) {
+			if(domainName.getDomainName().equals(domainNameSearch)) {
+				return domainName;
+			}
+		}
+		
+		return domainNameObj;
+	}
+	
+	public static DomainName getByDomainId(List<DomainName> domainNameList, int domainNameIdSearch) {
+		
+		DomainName domainNameObj = null;
+		
+		for(DomainName domainName : domainNameList) {
+			if(domainName.getDomainNameId().equals(domainNameIdSearch)) {
+				return domainName;
+			}
+		}
+		
+		return domainNameObj;
+	}
+	
+	public static DomainName[] convertGenericToArray(List<DomainName> domainNameList) {
+		
+		DomainName[] domainNames = new DomainName[domainNameList.size()];
+		
+		for(int i = 0; i < domainNameList.size(); i++) {
+			domainNames[i] = domainNameList.get(i);
+		}
+		
+		return domainNames;
+	}
+	
+	public static String[] convertGenericToString(List<DomainName> domainNameList) {
+		
+		String[] domainNames = new String[domainNameList.size()];
+		
+		for(int i = 0; i < domainNameList.size(); i++) {
+			domainNames[i] = domainNameList.get(i).getDomainName();
+		}
+		
+		return domainNames;
 	}
 }

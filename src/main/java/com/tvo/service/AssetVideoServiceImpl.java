@@ -10,6 +10,7 @@ import com.tvo.dao.AssetVideoDao;
 import com.tvo.dao.DomainPublishDao;
 import com.tvo.entity.AssetRoot;
 import com.tvo.entity.AssetVideo;
+import com.tvo.entity.DomainName;
 
 @Service
 @Transactional
@@ -46,7 +47,11 @@ public class AssetVideoServiceImpl implements AssetVideoService
 
 			AssetVideo existingAssetVideoRecord = assetsService.findAssetByAssetRootId(AssetVideo.class, existingAssetRootRecord.getAssetRootId());
 			existingAssetVideoRecord.setAssetRoot(existingAssetRootRecord);
-			existingAssetVideoRecord.setDomains(domainPublishDao.getDomainsByAssetId(existingAssetRootRecord.getAssetRootId()));
+			
+			//List<DomainName> domains = domainPublishDao.getDomainsByAssetId(existingAssetRootRecord.getAssetRootId()
+			
+					
+			//existingAssetVideoRecord.setDomains(DomainPublishDao.));
 			assetVideo = existingAssetVideoRecord;
 		}
 		

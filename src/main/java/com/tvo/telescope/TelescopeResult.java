@@ -12,11 +12,8 @@ import org.w3c.dom.NodeList;
 import com.tvo.brightcove.BrightcoveResponse;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
-<<<<<<< HEAD
 import com.tvo.entity.BrightcoveId;
 import com.tvo.entity.AssetRoot.*;
-=======
->>>>>>> 041390cde580b0e4ad7866d004faca59f891a0c9
 import com.tvo.entity.AssetVideo;
 import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.telescope.TelescopeRelationship.Containers;
@@ -293,19 +290,25 @@ public class TelescopeResult {
 					assetVideo.setThumbnailUrl(bcResponse.getThumbnailUrl());
 					assetVideo.getAssetRoot().setGeoFilterId(1);
 					
-					BrightcoveId[] brightcoveId = new BrightcoveId[assetVideo.getDomains().length + 1];
-					brightcoveId[0] = new BrightcoveId();
-					brightcoveId[0].setBrightcoveVideoId(bcResponse.getBrightcoveVideoId());
+					BrightcoveId[] brightcoveIds = new BrightcoveId[assetVideo.getDomains().length + 1];
+					brightcoveIds[0] = new BrightcoveId();
+					brightcoveIds[0].setBcId(bcResponse.getBrightcoveVideoId());
+					brightcoveIds[0].setDomainName("tvomain.org");
+					brightcoveIds[0].setCreatedBy("SYSTEM");
+					brightcoveIds[0].setCreatedOn(new Date());
 					
-					//for(String domain : assetVideo.getDomains()) {
 					for(int i = 0; i < assetVideo.getDomains().length; i++) {
 						bcResponse = BrightcoveResponse.getResponseByTelescopeAssetId(assetRoot.getTelescopeAssetId(), BrightcoveResponse.getUrlToken(assetVideo.getDomains()[i]));
 						
 						BrightcoveId domainBrightcoveId = new BrightcoveId();
-						domainBrightcoveId.setBrightcoveVideoId(bcResponse.getBrightcoveVideoId());
+						domainBrightcoveId.setBcId(bcResponse.getBrightcoveVideoId());
+						domainBrightcoveId.setDomainName(assetVideo.getDomains()[i]);
 						domainBrightcoveId.setCreatedOn(new Date());
 						domainBrightcoveId.setCreatedBy("SYSTEM");
+						brightcoveIds[i + 1] = domainBrightcoveId;
 					}
+					
+					assetVideo.setBrightcoveIds(brightcoveIds);
 				}
 				//assetVideo.setGeoFilter(GeoFilter.TEST_FILTER);
 			}

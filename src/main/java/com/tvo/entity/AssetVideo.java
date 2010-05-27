@@ -51,5 +51,5 @@ public class AssetVideo extends TvoEntity {
 	private String[] domains;
 	
 	@PersistentTransient
-	private BrightcoveId[] brightcoveId;
+	private BrightcoveId[] brightcoveIds;
 }
