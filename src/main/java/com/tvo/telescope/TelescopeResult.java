@@ -1,29 +1,24 @@
 package com.tvo.telescope;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/*
-import com.tvo.asset.AssetProgram;
-import com.tvo.asset.AssetRoot;
-import com.tvo.asset.AssetSeries;
-import com.tvo.asset.AssetVideo;
-import com.tvo.asset.AssetRoot.AssetType;
-*/
-
 import com.tvo.brightcove.BrightcoveResponse;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
+<<<<<<< HEAD
 import com.tvo.entity.BrightcoveId;
 import com.tvo.entity.AssetRoot.*;
+=======
+>>>>>>> 041390cde580b0e4ad7866d004faca59f891a0c9
 import com.tvo.entity.AssetVideo;
-
+import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.telescope.TelescopeRelationship.Containers;
 import com.tvo.telescope.TelescopeRelationship.RelationshipType;
 

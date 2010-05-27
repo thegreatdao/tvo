@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tvo.dao.TvoJdbcGenericDaoImpl;
-import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetVideo;
 import com.tvo.entity.TvoEntity;
 
