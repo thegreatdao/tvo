@@ -103,12 +103,15 @@ public class BrightcoveResponse {
     
     	String brightcoveResponseJsonText = jsonResponseSb.toString();
     
-    	JSONObject jsonObj = new JSONObject(brightcoveResponseJsonText);
+    	
     	// String errorTest =
     	// "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
     	// JSONObject jsonObj = new JSONObject(errorTest);
     
+    	JSONObject jsonObj;
+    	
     	try {
+    		jsonObj = new JSONObject(brightcoveResponseJsonText);
     	    response.brightcoveVideoId = jsonObj.getString("id");
     	    response.length = Integer.parseInt(jsonObj.getString("length"));
     	    response.videoStillUrl = jsonObj.getString("videoStillURL");
