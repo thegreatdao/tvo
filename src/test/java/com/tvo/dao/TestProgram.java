@@ -16,7 +16,7 @@ import com.tvo.entity.AssetRoot;
 import com.tvo.entity.StrandsScheduleView;
 import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.service.AssetProgramService;
-import com.tvo.service.StrandsScheduleViewServiceImpl;
+import com.tvo.service.StrandsScheduleViewService;
 import com.tvo.telescope.TelescopeStrandsSchedule;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +29,7 @@ public class TestProgram
 	private AssetProgramService assetProgramService;
 	
 	@Autowired
-	private StrandsScheduleViewServiceImpl strandsScheduleService;
+	private StrandsScheduleViewService strandsScheduleService;
 	
 	private AssetRoot assetRoot;
 	private AssetProgram assetProgram;
@@ -63,17 +63,11 @@ public class TestProgram
 	@Test
 	public void testassetProgramWithAssetVideo()
 	{
-		/*
 		AssetProgram existingAssetProgram = assetProgramService.getByTelescopeAssetId(assetProgram.getAssetRoot().getTelescopeAssetId());
 		if(existingAssetProgram != null) {
 			assetProgram.getAssetRoot().setAssetRootId(existingAssetProgram.getAssetRootId());
 			assetProgram.setAssetProgramId(existingAssetProgram.getAssetProgramId());
 		}
 		assetProgramService.save(assetProgram);
-		*/
-		
-		TelescopeStrandsSchedule strandsSchedule = new TelescopeStrandsSchedule();
-		StrandsScheduleView[] ssList = strandsSchedule.getSchedule(4);
-		strandsScheduleService.update(ssList);
 	}
 }
