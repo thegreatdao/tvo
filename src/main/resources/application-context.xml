@@ -20,19 +20,4 @@
 	<import resource="application-aop.xml"/>
 	<import resource="application-transaction-db.xml"/>
 	<context:annotation-config/>
-    <!-- 
-	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath://app.properties</value>
-			</list>
-		</property>
-		
-		<property name="ignoreUnresolvablePlaceholders">
-			<value>true</value>
-		</property>
-		 
-		 <property name="somethingTest"><value>{$something.test}</value></property>
-	</bean>
-     -->
 </beans>

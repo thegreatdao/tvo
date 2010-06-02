@@ -11,26 +11,28 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sun.xml.internal.ws.api.PropertySet.Property;
 import com.tvo.entity.AssetProgram;
 import com.tvo.entity.AssetRoot;
+import com.tvo.entity.StrandsScheduleView;
 import com.tvo.entity.AssetRoot.AssetType;
 import com.tvo.service.AssetProgramService;
+import com.tvo.service.StrandsScheduleViewServiceImpl;
+import com.tvo.telescope.TelescopeStrandsSchedule;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/application-transaction-db.xml")
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class TestProgram
 {	
 	@Autowired
 	private AssetProgramService assetProgramService;
-		
+	
+	@Autowired
+	private StrandsScheduleViewServiceImpl strandsScheduleService;
+	
 	private AssetRoot assetRoot;
 	private AssetProgram assetProgram;
-	
-	@Property("somethingTest")
-	private String testSetting;
 	
 	@Before
 	public void setUp()
@@ -63,18 +65,15 @@ public class TestProgram
 	{
 		/*
 		AssetProgram existingAssetProgram = assetProgramService.getByTelescopeAssetId(assetProgram.getAssetRoot().getTelescopeAssetId());
-		
 		if(existingAssetProgram != null) {
 			assetProgram.getAssetRoot().setAssetRootId(existingAssetProgram.getAssetRootId());
 			assetProgram.setAssetProgramId(existingAssetProgram.getAssetProgramId());
 		}
-		
 		assetProgramService.save(assetProgram);
 		*/
-		//testSetting = $('')
 		
-		
-		
-		System.out.println(testSetting);
+		TelescopeStrandsSchedule strandsSchedule = new TelescopeStrandsSchedule();
+		StrandsScheduleView[] ssList = strandsSchedule.getSchedule(4);
+		strandsScheduleService.update(ssList);
 	}
 }
