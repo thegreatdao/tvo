@@ -2,15 +2,14 @@ package com.tvo.telescope;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
 import com.tvo.entity.StrandsScheduleView;
 
-public class TelescopeStrandsRowMapper implements RowMapper {
+public class TelescopeStrandsRowMapper implements RowMapper<StrandsScheduleView> {
 	
-	public Object mapRow(ResultSet rs, int line) throws SQLException
+	public StrandsScheduleView mapRow(ResultSet rs, int line) throws SQLException
 	{
 		StrandsScheduleView ssv = new StrandsScheduleView();
 

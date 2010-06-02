@@ -7,7 +7,7 @@ import com.tvo.databases.DbWebRepository;
 import com.tvo.entity.StrandsScheduleView;
 
 public class TelescopeStrandsSchedule {
-	@SuppressWarnings("unchecked")
+	
 	public StrandsScheduleView[] getSchedule(int daysAhead) {
 		
 		JdbcTemplate select = new JdbcTemplate();

@@ -17,8 +17,7 @@ import com.tvo.entity.DomainName;
 import com.tvo.entity.DomainPublish;
 
 @Repository
-public class AssetVideoDaoImpl implements AssetVideoDao
-{
+public class AssetVideoDaoImpl implements AssetVideoDao {
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
@@ -37,8 +36,7 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 	 */
 	
 	@Override
-	public List<AssetVideo> findAssetVideosBetweenDates(String startDate, String endDate)
-	{
+	public List<AssetVideo> findAssetVideosBetweenDates(String startDate, String endDate) {
 		String sql;
 		Map<String, String> paramMap;
 		
@@ -52,8 +50,8 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		List<AssetVideo> result = namedParameterJdbcTemplate.query(sql, paramMap, rm);
 		List<DomainName> allDomainNames = domainPublishImpl.getAll();
 		
-		for(AssetVideo assetVideo : result)
-		{
+		for(AssetVideo assetVideo : result) {
+			
 			tvoJdbcGenericDaoImpl.fetchOneAssociation(assetVideo, AssetRoot.class);
 			List<DomainName> domainNames = domainPublishImpl.getDomainsByAssetId(assetVideo.getAssetRootId());
 			
@@ -63,11 +61,7 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 			
 			for(int i = 0; i < brightcoveIds.length; i++) {
 				DomainName foundDomain = DomainPublishDaoImpl.getByDomainId(allDomainNames, brightcoveIds[i].getDomainNameId());
-				
-				//String domainNameStr = DomainPublishDaoImpl.getByDomainName(domainNameList, domainNameSearch) brightcoveIds[i].getDomainNameId();
 				brightcoveIds[i].setDomainName(foundDomain.getDomainName());
-				
-				//domainNamesStr[] = domainNames[i].getDomainName()
 			}
 			
 			assetVideo.setBrightcoveIds(brightcoveIds);
@@ -76,9 +70,11 @@ public class AssetVideoDaoImpl implements AssetVideoDao
 		return result;
 	}
 
+	// domainNamesStr[] = domainNames[i].getDomainName()
+	// String domainNameStr = DomainPublishDaoImpl.getByDomainName(domainNameList, domainNameSearch) brightcoveIds[i].getDomainNameId();
+	
 	@Override
-	public void save(AssetVideo assetVideo)
-	{
+	public void save(AssetVideo assetVideo) {
 		AssetRoot assetRoot = assetVideo.getAssetRoot();
 		//int[] generatedIds = tvoJdbcGenericDaoImpl.saveParentWithChildAndReturnGeneratedIds(assetRoot, assetVideo);
 		//int assetRootGeneratedId = generatedIds[0];

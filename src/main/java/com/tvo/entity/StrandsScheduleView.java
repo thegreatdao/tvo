@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.sakaiproject.genericdao.api.annotations.PersistentId;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +14,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @XmlType(name="root")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StrandsScheduleView {
+public class StrandsScheduleView extends TvoEntity {
+	@PersistentId
+	private Integer id;
 	private String idSeries;
 	private String seriesTitle;
 	private String seriesDescription;

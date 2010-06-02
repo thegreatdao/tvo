@@ -108,7 +108,7 @@ public class BrightcoveResponse {
     	// "{ \"result\": null, \"error\": { \"code\": 103, \"name\": \"CallTimeoutError\", \"message\": \"The request you made is taking longer than expected to return. If requesting a large amount of data please try again with a smaller page_size.\" } }";
     	// JSONObject jsonObj = new JSONObject(errorTest);
     
-    	JSONObject jsonObj;
+    	JSONObject jsonObj = null;
     	
     	try {
     		jsonObj = new JSONObject(brightcoveResponseJsonText);

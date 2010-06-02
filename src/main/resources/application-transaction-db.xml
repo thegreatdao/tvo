@@ -72,6 +72,11 @@
 		<property name="tableName" value="brightcove_id" />
 	</bean>
 	
+	<bean id="simpleStrandsScheduleViewMapper" class="org.sakaiproject.genericdao.springjdbc.SimpleDataMapper">
+		<property name="persistentClassname" value="com.tvo.entity.StrandsScheduleView" />
+		<property name="tableName" value="strands_schedule_view" />
+	</bean>
+	
 	<bean id="tvoJdbcGenericDao" class="com.tvo.dao.TvoJdbcGenericDaoImpl">
 		<property name="dataSource" ref="tvoDataSource" />
 		<property name="databaseType" value="MYSQL" />
@@ -83,6 +88,7 @@
 				<ref bean="simpleDomainPublishMapper" />
 				<ref bean="simpleDomainNameMapper" />
 				<ref bean="simpleBrightcoveIdMapper" />
+				<ref bean="simpleStrandsScheduleViewMapper" />
 			</list>
 		</property>
 	</bean>
